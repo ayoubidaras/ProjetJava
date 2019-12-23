@@ -19,7 +19,7 @@ public class LoginFrame {
 
     public static void main(String[] args){
          JFrame frame = new JFrame("LoginFrame");
-         frame.setContentPane(new App().panelMain);
+         frame.setContentPane(new LoginFrame().panelMain);
          frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
          frame.pack();
          frame.setVisible(true);
