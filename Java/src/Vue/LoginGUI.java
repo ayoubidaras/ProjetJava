@@ -7,7 +7,10 @@ package Vue;
 
 import Controle.Controler;
 import Controle.connexionDB;
-import static Vue.LoginFrame.conn;
+import java.sql.ResultSet;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,9 +22,16 @@ public class LoginGUI extends javax.swing.JFrame {
     /**
      * Creates new form LoginGUI
      */
+    Connection conn = null;
+    ResultSet rs = null ;
+    PreparedStatement ps = null;
+    
     public LoginGUI(){
        initComponents();
        setVisible(true);
+       
+       conn = connexionDB.start();
+       
     }
 
     public LoginGUI(Controler aThis) {
@@ -38,69 +48,81 @@ public class LoginGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jTextField1 = new javax.swing.JTextField();
+        TextPassword = new javax.swing.JPasswordField();
+        TextLogin = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btn_co = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Log In");
         setBackground(new java.awt.Color(153, 204, 255));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 153));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPasswordField1.setBackground(new java.awt.Color(204, 255, 255));
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        TextPassword.setBackground(new java.awt.Color(204, 255, 255));
+        TextPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TextPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                TextPasswordActionPerformed(evt);
             }
         });
-        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 375, 79));
+        jPanel1.add(TextPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 240, 60));
 
-        jTextField1.setBackground(new java.awt.Color(204, 255, 255));
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 100, 375, 89));
+        TextLogin.setBackground(new java.awt.Color(204, 255, 255));
+        TextLogin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel1.add(TextLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 240, 60));
+
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         jTextArea1.setEditable(false);
         jTextArea1.setBackground(new java.awt.Color(0, 153, 153));
         jTextArea1.setColumns(7);
-        jTextArea1.setFont(new java.awt.Font("Monospaced", 0, 36)); // NOI18N
+        jTextArea1.setFont(new java.awt.Font("Monospaced", 1, 36)); // NOI18N
         jTextArea1.setRows(1);
         jTextArea1.setTabSize(10);
         jTextArea1.setText("Log In");
         jTextArea1.setToolTipText("");
-        jTextArea1.setWrapStyleWord(true);
+        jTextArea1.setAutoscrolls(false);
+        jTextArea1.setName(""); // NOI18N
         jScrollPane1.setViewportView(jTextArea1);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 160, 70));
 
         jLabel1.setText("Login");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
 
         jLabel2.setText("Password");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 140, 50));
 
-        jButton1.setText("Connexion");
-        jButton1.setName("btn_co"); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        btn_co.setText("Connexion");
+        btn_co.setName("btn_co"); // NOI18N
+        btn_co.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_coMouseClicked(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 380, -1, -1));
+        btn_co.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_coActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_co, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         getAccessibleContext().setAccessibleName("Log in");
@@ -108,14 +130,33 @@ public class LoginGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-         JOptionPane.showMessageDialog(null,"Hello World !");
-                conn = connexionDB.start();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btn_coActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_coActionPerformed
+                 
+                 
+    }//GEN-LAST:event_btn_coActionPerformed
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void TextPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextPasswordActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
+    }//GEN-LAST:event_TextPasswordActionPerformed
+
+    private void btn_coMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_coMouseClicked
+     String requete = "select * from login_table where login= ? and password = ?";
+             try{
+               ps = conn.prepareStatement(requete);
+               ps.setString(1, TextLogin.getText());
+               String passText = new String(TextPassword.getPassword());
+               ps.setString(2,passText);
+               rs = ps.executeQuery();
+              
+               if(rs.next())
+               {
+                   JOptionPane.showMessageDialog(null,"Connected");
+                   System.out.println("Welcome");
+               }
+             }catch (Exception e){
+            System.err.print(e);
+        }
+    }//GEN-LAST:event_btn_coMouseClicked
 
     /**
      * @param args the command line arguments
@@ -153,13 +194,13 @@ public class LoginGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField TextLogin;
+    private javax.swing.JPasswordField TextPassword;
+    private javax.swing.JButton btn_co;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
