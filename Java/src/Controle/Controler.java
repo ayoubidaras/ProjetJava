@@ -1,16 +1,16 @@
 package Controle;
 
-import Vue.LoginFrame;
+import Vue.LoginGUI;
 
 public class Controler {
 	
-	private LoginFrame l_gui = null;
+	private LoginGUI l_gui = null;
 	
 	
 	public Controler(String[] args)
 	{
       
-		l_gui = new LoginFrame(this);
+		l_gui = new LoginGUI();
        
     }
 

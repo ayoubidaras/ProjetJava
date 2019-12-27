@@ -3,6 +3,7 @@ package Vue;
 
 import javax.swing.*;
 
+
 import com.sun.xml.internal.ws.api.server.Container;
 
 import Controle.Controler;
@@ -28,8 +29,14 @@ public class LoginFrame extends JFrame{
     static Connection conn = null;
 
     public LoginFrame(Controler controle) {
-    	
     	super("LoginFrame");
+    	init();
+    	
+    	
+    }
+
+    public void init(){
+    	
     	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocation(100,0);
         setSize(1080,1200);
@@ -56,10 +63,6 @@ public class LoginFrame extends JFrame{
         connectionPlace.add(btn_connexion);
         
         setVisible(true);
-    }
-
-    public static void init(){
-         
          
         // conn = connexionDB.start();
          
