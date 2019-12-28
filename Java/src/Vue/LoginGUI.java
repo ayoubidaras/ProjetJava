@@ -150,8 +150,8 @@ public class LoginGUI extends javax.swing.JFrame {
               
                if(rs.next())
                {
-                   JOptionPane.showMessageDialog(null,"Connected");
-                   System.out.println("Welcome");
+                  dispose();
+                  new HomeGUI().setVisible(true);
                }
              }catch (Exception e){
             System.err.print(e);
