@@ -37,7 +37,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
     //display table
     private void Affichage(){
        try{
-           String requete = "select * from EMPLOYE";
+           String requete = "select prenom, nom from EMPLOYE E, INFIRMIER I where E.numero = I.numero";
            ps = conn.prepareStatement(requete);
            rs = ps.executeQuery();
            Table_Emp.setModel(DbUtils.resultSetToTableModel(rs));
@@ -72,9 +72,9 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         setForeground(new java.awt.Color(255, 255, 255));
         setTitle("Liste"); // NOI18N
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMaximumSize(new java.awt.Dimension(1350, 670));
-        setMinimumSize(new java.awt.Dimension(1050, 470));
-        setPreferredSize(new java.awt.Dimension(736, 366));
+        setMaximumSize(new java.awt.Dimension(736, 422));
+        setMinimumSize(new java.awt.Dimension(736, 422));
+        setPreferredSize(new java.awt.Dimension(736, 422));
         setVisible(true);
 
         jScrollPane1.setBackground(new java.awt.Color(102, 102, 102));
