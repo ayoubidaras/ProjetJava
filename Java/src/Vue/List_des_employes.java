@@ -74,7 +74,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(new java.awt.Dimension(1350, 670));
         setMinimumSize(new java.awt.Dimension(1050, 470));
-        setPreferredSize(new java.awt.Dimension(1050, 470));
+        setPreferredSize(new java.awt.Dimension(736, 366));
         setVisible(true);
 
         jScrollPane1.setBackground(new java.awt.Color(102, 102, 102));
@@ -91,6 +91,9 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        Table_Emp.setMaximumSize(new java.awt.Dimension(736, 366));
+        Table_Emp.setMinimumSize(new java.awt.Dimension(0, 0));
+        Table_Emp.setPreferredSize(new java.awt.Dimension(736, 366));
         jScrollPane1.setViewportView(Table_Emp);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
