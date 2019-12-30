@@ -10,13 +10,14 @@ public class Controler {
 	public Controler(String[] args)
 	{
       
-		new LoginGUI();
+            LoginGUI loginGUI;
+            loginGUI = new LoginGUI();
        
     }
 
 	public static void main(String[] args) 
 	{
-		new Controler(args);
+            Controler controler = new Controler(args);
 	}
 
 }

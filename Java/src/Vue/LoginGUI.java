@@ -7,10 +7,12 @@ package Vue;
 
 import Controle.Controler;
 import Controle.connexionDB;
+import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -50,56 +52,48 @@ public class LoginGUI extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         TextPassword = new javax.swing.JPasswordField();
         TextLogin = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         btn_co = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Log In");
         setBackground(new java.awt.Color(153, 204, 255));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        TextPassword.setBackground(new java.awt.Color(204, 255, 255));
+        TextPassword.setBackground(new java.awt.Color(255, 153, 51));
         TextPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        TextPassword.setText("admin");
         TextPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TextPasswordActionPerformed(evt);
             }
         });
-        jPanel1.add(TextPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 240, 60));
+        jPanel1.add(TextPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 160, 40));
 
-        TextLogin.setBackground(new java.awt.Color(204, 255, 255));
+        TextLogin.setBackground(new java.awt.Color(255, 153, 51));
         TextLogin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel1.add(TextLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 240, 60));
+        TextLogin.setText("1");
+        TextLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextLoginActionPerformed(evt);
+            }
+        });
+        jPanel1.add(TextLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 160, 40));
 
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-        jTextArea1.setEditable(false);
-        jTextArea1.setBackground(new java.awt.Color(0, 153, 153));
-        jTextArea1.setColumns(7);
-        jTextArea1.setFont(new java.awt.Font("Monospaced", 1, 36)); // NOI18N
-        jTextArea1.setRows(1);
-        jTextArea1.setTabSize(10);
-        jTextArea1.setText("Log In");
-        jTextArea1.setToolTipText("");
-        jTextArea1.setAutoscrolls(false);
-        jTextArea1.setName(""); // NOI18N
-        jScrollPane1.setViewportView(jTextArea1);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 160, 70));
-
+        jLabel1.setForeground(new java.awt.Color(255, 153, 0));
         jLabel1.setText("Login");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
+        jLabel2.setForeground(new java.awt.Color(255, 153, 0));
         jLabel2.setText("Password");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 140, 50));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, 50, 20));
 
+        btn_co.setBackground(new java.awt.Color(255, 153, 51));
         btn_co.setText("Connexion");
         btn_co.setName("btn_co"); // NOI18N
         btn_co.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -112,17 +106,22 @@ public class LoginGUI extends javax.swing.JFrame {
                 btn_coActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_co, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 330, -1, -1));
+        jPanel1.add(btn_co, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Agency FB", 0, 48)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 153, 0));
+        jLabel3.setText("Log In");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 100, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         getAccessibleContext().setAccessibleName("Log in");
@@ -140,7 +139,7 @@ public class LoginGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_TextPasswordActionPerformed
 
     private void btn_coMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_coMouseClicked
-     String requete = "select * from login_table where login= ? and password = ?";
+     String requete = "select * from Login_table where login= ? and password = ?";
              try{
                ps = conn.prepareStatement(requete);
                ps.setString(1, TextLogin.getText());
@@ -153,10 +152,22 @@ public class LoginGUI extends javax.swing.JFrame {
                   dispose();
                   new HomeGUI().setVisible(true);
                }
-             }catch (Exception e){
+               else 
+               {
+                   JFrame frame = new JFrame("Warning");
+                   frame.setForeground(Color.red);
+                   JOptionPane.showMessageDialog(frame, "Wrong Username or password.",
+                                                        "Warning",
+                                                         JOptionPane.WARNING_MESSAGE);
+               }
+        } catch (SQLException e) {
             System.err.print(e);
         }
     }//GEN-LAST:event_btn_coMouseClicked
+
+    private void TextLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,8 +210,7 @@ public class LoginGUI extends javax.swing.JFrame {
     private javax.swing.JButton btn_co;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
