@@ -88,7 +88,6 @@ public class HomeGUI extends javax.swing.JFrame {
         );
 
         Desk.setBackground(new java.awt.Color(204, 204, 204));
-        Desk.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0)));
 
         javax.swing.GroupLayout DeskLayout = new javax.swing.GroupLayout(Desk);
         Desk.setLayout(DeskLayout);
@@ -203,7 +202,7 @@ public class HomeGUI extends javax.swing.JFrame {
                 .addComponent(btn_mal, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(90, 90, 90)
                 .addComponent(Desk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
