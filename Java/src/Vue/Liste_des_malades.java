@@ -18,67 +18,51 @@ import net.proteanit.sql.DbUtils;
  *
  * @author olivier
  */
-public class List_des_employes extends javax.swing.JInternalFrame {
+public class Liste_des_malades extends javax.swing.JInternalFrame {
 
     Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
     static String test;
-    /**
-     * Creates new form List_des_employes
-     */
-    public List_des_employes() {
-        /*initComponents();
-        remove_title_bar();
-        
-        conn = connexionDB.start();
-        
-        Affichage();*/
-        
-    }
-    public List_des_employes(Boolean x, Boolean sal) {
+    
+   
+     public Liste_des_malades() {
         initComponents();
         remove_title_bar();
         conn = connexionDB.start();
-        Affichage(x, sal);  
-        
-    }
-    //display table
-    private void Affichage(Boolean x, Boolean sal){
+        Affichage();
+            
+        }
+     
+         private void Affichage(){
        try{
            String requete;
-           if(x == false && sal == false)
-                requete = "select I.numero ,prenom, nom from EMPLOYE E, INFIRMIER I where E.numero = I.numero";
-           else if(x == false && sal == true)
-                requete = "select I.numero ,prenom, nom, salaire from EMPLOYE E, INFIRMIER I where E.numero = I.numero"; 
-           else if(x == true && sal == true)
-                   requete = "select I.numero ,prenom, nom, salaire from EMPLOYE E, INFIRMIER I where E.numero = I.numero and rotation =NUIT";
-           else
-               requete = "select I.numero ,prenom, nom from EMPLOYE E, INFIRMIER I where E.numero = I.numero and rotation=NUIT";
+          
+                requete = "select numero, prenom, nom from MALADE";
+            
            
            ps = conn.prepareStatement(requete);
            rs = ps.executeQuery();
-           Table_Emp.setModel(DbUtils.resultSetToTableModel(rs));
+           Table_mal.setModel(DbUtils.resultSetToTableModel(rs));
            
        }catch(SQLException e){
            System.out.println("Exeption" + e);
        }
     }
-    
-    
+     
     private void remove_title_bar(){
-        putClientProperty("List_des_employes.isPalette", Boolean.TRUE);
+        putClientProperty("Liste_des_malades.isPalette", Boolean.TRUE);
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
     }
     
-    public void deplacement()
+     public void deplacement()
          {
              try{
-                int row = Table_Emp.getSelectedRow();
-                List_des_employes.test = (Table_Emp.getModel().getValueAt(row, 0).toString());
-                String requete = "select * from EMPLOYE E, INFIRMIER I where E.numero = I.numero and I.numero ='"+test+"'";
+                int row = Table_mal.getSelectedRow();
+                Liste_des_malades.test = (Table_mal.getModel().getValueAt(row, 0).toString());
+                String requete = "select * from MALADE where numero = '"+test+"'";
                 ps = conn.prepareStatement(requete);
                 rs = ps.executeQuery();
                 
@@ -93,10 +77,8 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                     txt_tel.setText(t4);
                     String t5 = rs.getString("adresse");
                     txt_adresse.setText(t5);
-                    String t6 = rs.getString("code_service");
-                    txt_service.setText(t6);
-                    String t7 = rs.getString("rotation");
-                    txt_rotation.setText(t7);
+                    String t6 = rs.getString("mutuelle");
+                    txt_mutuelle.setText(t6);
                     
                 }
              }catch(SQLException e)
@@ -115,34 +97,26 @@ public class List_des_employes extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        Table_Emp = new javax.swing.JTable();
+        Table_mal = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txt_numero = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
         txt_nom = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         txt_prenom = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txt_numero = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txt_tel = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txt_adresse = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txt_service = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        txt_rotation = new javax.swing.JTextField();
+        txt_mutuelle = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(102, 102, 102));
-        setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        setForeground(new java.awt.Color(255, 255, 255));
-        setTitle("Liste"); // NOI18N
-        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setVisible(true);
+        setBorder(null);
 
-        jScrollPane1.setBackground(new java.awt.Color(102, 102, 102));
-
-        Table_Emp.setBackground(new java.awt.Color(153, 153, 153));
-        Table_Emp.setModel(new javax.swing.table.DefaultTableModel(
+        Table_mal.setBackground(new java.awt.Color(153, 153, 153));
+        Table_mal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -153,30 +127,35 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        Table_Emp.setMinimumSize(new java.awt.Dimension(0, 0));
-        Table_Emp.addMouseListener(new java.awt.event.MouseAdapter() {
+        Table_mal.setPreferredSize(new java.awt.Dimension(736, 366));
+        Table_mal.setSelectionForeground(new java.awt.Color(153, 153, 153));
+        Table_mal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Table_EmpMouseClicked(evt);
+                Table_malMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(Table_Emp);
-        Table_Emp.getAccessibleContext().setAccessibleParent(null);
+        jScrollPane1.setViewportView(Table_mal);
+        Table_mal.getAccessibleContext().setAccessibleParent(null);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)), "Information"));
 
-        jLabel1.setText("Numero :");
+        jLabel1.setText("Nom :");
 
-        jLabel2.setText("Nom :");
+        txt_nom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_nomActionPerformed(evt);
+            }
+        });
 
-        jLabel3.setText("Prénom :");
+        jLabel2.setText("Prénom :");
 
-        jLabel4.setText("Numéros de téléphone :");
+        jLabel3.setText("Numero :");
+
+        jLabel4.setText("Numéro de télephone :");
 
         jLabel5.setText("Adresse :");
 
-        jLabel6.setText("Code de service :");
-
-        jLabel7.setText("Rotation :");
+        jLabel6.setText("Mutuelle :");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -186,69 +165,60 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_prenom))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_adresse))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_tel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel7)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txt_rotation))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txt_service, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 80, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(txt_tel, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_adresse, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_prenom))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_mutuelle, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 14, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txt_numero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
+                    .addComponent(txt_numero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
                     .addComponent(txt_prenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txt_tel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txt_adresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43)
+                .addGap(63, 63, 63)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txt_service, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txt_rotation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txt_mutuelle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -256,41 +226,47 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 135, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Table_EmpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_EmpMouseClicked
+    private void txt_nomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nomActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_nomActionPerformed
+
+    private void Table_malMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_malMouseClicked
         deplacement();
-    }//GEN-LAST:event_Table_EmpMouseClicked
+    }//GEN-LAST:event_Table_malMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable Table_Emp;
+    private javax.swing.JTable Table_mal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txt_adresse;
+    private javax.swing.JTextField txt_mutuelle;
     private javax.swing.JTextField txt_nom;
     private javax.swing.JTextField txt_numero;
     private javax.swing.JTextField txt_prenom;
-    private javax.swing.JTextField txt_rotation;
-    private javax.swing.JTextField txt_service;
     private javax.swing.JTextField txt_tel;
     // End of variables declaration//GEN-END:variables
 }

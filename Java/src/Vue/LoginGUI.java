@@ -8,7 +8,6 @@ package Vue;
 import Controle.Controler;
 import Controle.connexionDB;
 import java.awt.Color;
-import java.awt.HeadlessException;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -78,7 +77,12 @@ public class LoginGUI extends javax.swing.JFrame {
 
         TextLogin.setBackground(new java.awt.Color(255, 153, 51));
         TextLogin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TextLogin.setText("admin");
+        TextLogin.setText("1");
+        TextLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TextLoginActionPerformed(evt);
+            }
+        });
         jPanel1.add(TextLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 160, 40));
 
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
@@ -160,6 +164,10 @@ public class LoginGUI extends javax.swing.JFrame {
             System.err.print(e);
         }
     }//GEN-LAST:event_btn_coMouseClicked
+
+    private void TextLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextLoginActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TextLoginActionPerformed
 
     /**
      * @param args the command line arguments
