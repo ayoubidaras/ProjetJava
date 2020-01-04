@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class ModifInfirmier extends javax.swing.JFrame {
 
-      Connection conn = null;
+    Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
     /** Creates new form AjoutInfirmier
