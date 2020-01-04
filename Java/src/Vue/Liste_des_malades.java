@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import net.proteanit.sql.DbUtils;
@@ -55,6 +56,11 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
         ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
+    }
+    
+     public String gettableresult()
+    {
+        return test;
     }
     
      public void deplacement()
@@ -132,6 +138,7 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         txt_chbr = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
+        btn_suppr = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         Table_mal = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
@@ -168,6 +175,13 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
+            }
+        });
+
+        btn_suppr.setText("Supprimer");
+        btn_suppr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_supprActionPerformed(evt);
             }
         });
 
@@ -216,8 +230,13 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
                                 .addComponent(txt_chbr, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 22, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(btn_suppr, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -253,9 +272,11 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txt_chbr, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton3)
-                .addGap(32, 32, 32))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_suppr)
+                .addGap(13, 13, 13))
         );
 
         Table_mal.setBackground(new java.awt.Color(153, 153, 153));
@@ -351,9 +372,30 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
         mal.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void btn_supprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_supprActionPerformed
+        try{ 
+           
+            String requete = "delete from MALADE where numero ='"+gettableresult()+"'";
+            System.out.println(test);
+            if(JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir le supprimer ?",
+                                        "Supprimer", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
+          
+        {
+                ps = conn.prepareStatement(requete);
+                ps.execute();
+
+                JOptionPane.showMessageDialog(null,"Supprimé avec succès");
+                dispose();
+          }
+       }catch(SQLException e){
+           System.out.println(e);
+       }
+    }//GEN-LAST:event_btn_supprActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Table_mal;
+    private javax.swing.JButton btn_suppr;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
