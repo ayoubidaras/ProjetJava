@@ -28,6 +28,9 @@ public class List_des_employes extends javax.swing.JInternalFrame {
      * Creates new form List_des_employes
      */
     public List_des_employes() {
+        initComponents();
+        conn = connexionDB.start();
+        Affichage();
         /*initComponents();
         remove_title_bar();
         
@@ -43,6 +46,8 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         Affichage(x, sal);  
         
     }
+    
+   
     //display table
     private void Affichage(Boolean x, Boolean sal){
        try{
@@ -65,6 +70,21 @@ public class List_des_employes extends javax.swing.JInternalFrame {
        }
     }
     
+    private void Affichage(){
+       try{
+           String requete;
+           requete = "select I.numero ,prenom, nom, salaire from EMPLOYE E, INFIRMIER I where E.numero = I.numero"; 
+         
+           
+           ps = conn.prepareStatement(requete);
+           rs = ps.executeQuery();
+           Table_Emp.setModel(DbUtils.resultSetToTableModel(rs));
+           
+       }catch(SQLException e){
+           System.out.println("Exeption" + e);
+       }
+    }
+    
     
     private void remove_title_bar(){
         putClientProperty("List_des_employes.isPalette", Boolean.TRUE);
@@ -73,14 +93,27 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         this.setBorder(null);
     }
     
+    public String gettableresult()
+    {
+        return test;
+    }
+    
+    
     public void deplacement()
          {
+              
              try{
+                 System.out.println("S0");
                 int row = Table_Emp.getSelectedRow();
-                List_des_employes.test = (Table_Emp.getModel().getValueAt(row, 0).toString());
+                 System.out.println(row);
+                test = (Table_Emp.getModel().getValueAt(row, 0).toString());
+                System.out.println(test);
                 String requete = "select * from EMPLOYE E, INFIRMIER I where E.numero = I.numero and I.numero ='"+test+"'";
+                System.out.println("S2");
                 ps = conn.prepareStatement(requete);
+                System.out.println("T");
                 rs = ps.executeQuery();
+                System.out.println("U");
                 
                 if(rs.next()){
                     String t1 = rs.getString("numero");
@@ -133,6 +166,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         txt_rotation = new javax.swing.JTextField();
         add = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 102, 102));
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -258,6 +292,13 @@ public class List_des_employes extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton1.setText("Modifier");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -266,22 +307,26 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 21, Short.MAX_VALUE)
-                        .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(add, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 67, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -308,10 +353,16 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         inf.setVisible(true);
     }//GEN-LAST:event_addActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ModifInfirmier inf = new ModifInfirmier(test);
+        inf.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Table_Emp;
     private javax.swing.JButton add;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
