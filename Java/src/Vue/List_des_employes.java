@@ -23,6 +23,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
 
     Connection conn = null;
     ResultSet rs = null ;
+    ResultSet rs2 = null ;
     PreparedStatement ps = null;
     static String test;
     /**
@@ -132,6 +133,90 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                  System.out.println(e);
              }
          }
+    
+    public void search()
+    {
+        if(radio_nom.isSelected())
+            try{
+                String requete1 = "select E.numero, E.prenom, E.nom from INFIRMIER I , EMPLOYE E where E.nom LIKE ? and E.numero = I.numero";
+                ps = conn.prepareStatement(requete1); 
+                ps.setString(1, "%"+txt_search.getText()+"%");
+                rs =ps.executeQuery();
+                Table_Emp.setModel(DbUtils.resultSetToTableModel(rs));
+            
+       }catch(SQLException e){
+           System.out.println(e);
+       }
+       
+       
+      if(radio_num.isSelected())
+        try{
+             String requete2 = "select E.numero, E.prenom, E.nom from INFIRMIER I , EMPLOYE E where E.numero LIKE ? and E.numero = I.numero";
+             ps = conn.prepareStatement(requete2); 
+             ps.setString(1,"%"+ txt_search.getText()+"%");
+             rs2 = ps.executeQuery();
+
+
+             Table_Emp.setModel(DbUtils.resultSetToTableModel(rs2));
+
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+      
+      if(radio_prenom.isSelected())
+          try{
+             String requete2 = "select E.numero, E.prenom, E.nom from INFIRMIER I , EMPLOYE E where E.prenom LIKE ? and E.numero = I.numero";
+             ps = conn.prepareStatement(requete2); 
+             ps.setString(1,"%"+ txt_search.getText()+"%");
+             rs2 = ps.executeQuery();
+
+
+             Table_Emp.setModel(DbUtils.resultSetToTableModel(rs2));
+
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+      
+       if(radio_sal.isSelected())
+          try{
+             String requete2 = "select E.numero, E.prenom, E.nom from INFIRMIER I , EMPLOYE E where I.salaire LIKE ? and E.numero = I.numero";
+             ps = conn.prepareStatement(requete2); 
+             ps.setString(1,"%"+ txt_search.getText()+"%");
+             rs2 = ps.executeQuery();
+
+
+             Table_Emp.setModel(DbUtils.resultSetToTableModel(rs2));
+
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+        if(radio_rot.isSelected())
+          try{
+             String requete2 = "select E.numero, E.prenom, E.nom from INFIRMIER I , EMPLOYE E where I.rotation LIKE ? and E.numero = I.numero";
+             ps = conn.prepareStatement(requete2); 
+             ps.setString(1,"%"+ txt_search.getText()+"%");
+             rs2 = ps.executeQuery();
+
+
+             Table_Emp.setModel(DbUtils.resultSetToTableModel(rs2));
+
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+         if(radio_ser.isSelected())
+          try{
+             String requete2 = "select E.numero, E.prenom, E.nom from INFIRMIER I , EMPLOYE E where I.code_service LIKE ? and E.numero = I.numero";
+             ps = conn.prepareStatement(requete2); 
+             ps.setString(1,"%"+ txt_search.getText()+"%");
+             rs2 = ps.executeQuery();
+
+
+             Table_Emp.setModel(DbUtils.resultSetToTableModel(rs2));
+
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -142,6 +227,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         panel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Table_Emp = new javax.swing.JTable();
@@ -166,6 +252,12 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         txt_search = new javax.swing.JTextField();
         btn_search = new javax.swing.JButton();
+        radio_num = new javax.swing.JRadioButton();
+        radio_nom = new javax.swing.JRadioButton();
+        radio_prenom = new javax.swing.JRadioButton();
+        radio_sal = new javax.swing.JRadioButton();
+        radio_ser = new javax.swing.JRadioButton();
+        radio_rot = new javax.swing.JRadioButton();
 
         setBackground(new java.awt.Color(102, 102, 102));
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -347,12 +439,43 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Recherche :");
 
+        txt_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_searchActionPerformed(evt);
+            }
+        });
+        txt_search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_searchKeyReleased(evt);
+            }
+        });
+
         btn_search.setText("rechercher");
         btn_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchActionPerformed(evt);
             }
         });
+
+        buttonGroup1.add(radio_num);
+        radio_num.setSelected(true);
+        radio_num.setText("Numero");
+        radio_num.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        buttonGroup1.add(radio_nom);
+        radio_nom.setText("Nom");
+
+        buttonGroup1.add(radio_prenom);
+        radio_prenom.setText("Prenom");
+
+        buttonGroup1.add(radio_sal);
+        radio_sal.setText("Salaire");
+
+        buttonGroup1.add(radio_ser);
+        radio_ser.setText("Service");
+
+        buttonGroup1.add(radio_rot);
+        radio_rot.setText("Rotation");
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
@@ -372,7 +495,19 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_search)))
+                        .addComponent(btn_search)
+                        .addGap(18, 18, 18)
+                        .addComponent(radio_num)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radio_nom)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(radio_prenom)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radio_ser)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(radio_rot)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(radio_sal)))
                 .addContainerGap(328, Short.MAX_VALUE))
         );
         panelLayout.setVerticalGroup(
@@ -382,8 +517,14 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_search))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                    .addComponent(btn_search)
+                    .addComponent(radio_num)
+                    .addComponent(radio_nom)
+                    .addComponent(radio_prenom)
+                    .addComponent(radio_sal)
+                    .addComponent(radio_ser)
+                    .addComponent(radio_rot))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelLayout.createSequentialGroup()
@@ -444,22 +585,17 @@ public class List_des_employes extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_supprActionPerformed
 
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
-       String requete = "select E.numero, E.prenom, E.nom from INFIRMIER I , EMPLOYE E where E.nom = ? and E.numero = I.numero";
-       
-       try{
-            ps = conn.prepareStatement(requete); 
-            ps.setString(1, txt_search.getText());
-            rs =ps.executeQuery();
-            
-            
-            Table_Emp.setModel(DbUtils.resultSetToTableModel(rs));
-            
-       }catch(SQLException e){
-           System.out.println(e);
-       }
-     
+      search(); 
        
     }//GEN-LAST:event_btn_searchActionPerformed
+
+    private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
+       search();
+    }//GEN-LAST:event_txt_searchKeyReleased
+
+    private void txt_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_searchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_searchActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -467,6 +603,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
     private javax.swing.JButton add;
     private javax.swing.JButton btn_search;
     private javax.swing.JButton btn_suppr;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -479,6 +616,12 @@ public class List_des_employes extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panel;
+    private javax.swing.JRadioButton radio_nom;
+    private javax.swing.JRadioButton radio_num;
+    private javax.swing.JRadioButton radio_prenom;
+    private javax.swing.JRadioButton radio_rot;
+    private javax.swing.JRadioButton radio_sal;
+    private javax.swing.JRadioButton radio_ser;
     private javax.swing.JTextField txt_adresse;
     private javax.swing.JTextField txt_nom;
     private javax.swing.JTextField txt_numero;
