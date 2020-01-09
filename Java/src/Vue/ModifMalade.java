@@ -115,6 +115,9 @@ public class ModifMalade extends javax.swing.JFrame {
 
         jLabel8.setText("Numéro :");
 
+        txt_num.setEditable(false);
+        txt_num.setBorder(null);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
