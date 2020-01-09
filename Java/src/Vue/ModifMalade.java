@@ -5,7 +5,6 @@
  */
 package Vue;
 
-import Controle.connexionDB;
 import static Vue.Liste_des_malades.test;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,17 +17,18 @@ import javax.swing.JOptionPane;
  */
 public class ModifMalade extends javax.swing.JFrame {
     
-    Connection conn = null;
+    static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
     /**
      * Creates new form ModifMalade
      * @param test
+     * @param connexion
      */
-    public ModifMalade(String test) {
+    public ModifMalade(String test, Connection connexion) {
+       ModifMalade.conn = connexion;
        initComponents();
-        conn = connexionDB.start();
-        this.recuperer(test);
+       this.recuperer(test);
     }
     
     
@@ -254,7 +254,7 @@ public class ModifMalade extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new ModifMalade(test).setVisible(true);
+                new ModifMalade(test, conn).setVisible(true);
             }
         });
     }

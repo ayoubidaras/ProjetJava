@@ -1,17 +1,26 @@
 
 package Vue;
 
+import java.sql.Connection;
+
 /**
  *
  * @author Oli'
  */
 public class HomeGUI extends javax.swing.JFrame {
-
+    static Connection conn = null;
     /**
      * Creates new form HomeGUI
+     * @param connexion
      */
-    public HomeGUI() {
+    public HomeGUI(Connection connexion) {
+        
+        HomeGUI.conn = connexion;
         initComponents();
+        
+        Liste_des_malades l_mal = new Liste_des_malades(conn);
+        this.Desk.add(l_mal);
+        l_mal.show();
        
         
     }
@@ -36,7 +45,6 @@ public class HomeGUI extends javax.swing.JFrame {
         btn_doc = new javax.swing.JButton();
         toggle_free = new javax.swing.JToggleButton();
         btn_mal = new javax.swing.JButton();
-        check_sal = new javax.swing.JCheckBox();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -119,7 +127,7 @@ public class HomeGUI extends javax.swing.JFrame {
 
         btn_inf.setAction(toggle_NS.getAction());
         btn_inf.setBackground(new java.awt.Color(255, 153, 0));
-        btn_inf.setText("Infirmières de service ");
+        btn_inf.setText("Infirmières de service  ");
         btn_inf.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_inf.setInputVerifier(toggle_NS.getInputVerifier());
         btn_inf.addActionListener(new java.awt.event.ActionListener() {
@@ -150,17 +158,9 @@ public class HomeGUI extends javax.swing.JFrame {
             }
         });
 
-        check_sal.setBackground(new java.awt.Color(204, 204, 0));
-        check_sal.setText("Salaires");
-        check_sal.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                check_salActionPerformed(evt);
-            }
-        });
-
         jButton1.setBackground(new java.awt.Color(255, 153, 0));
         jButton1.setText("Services");
-        jButton1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -178,27 +178,23 @@ public class HomeGUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(btn_mal, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addGap(22, 22, 22)
-                                    .addComponent(btn_inf, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btn_doc, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addComponent(toggle_NS, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(check_sal)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(toggle_free, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(65, 65, 65)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(76, 76, 76)
+                        .addComponent(toggle_NS, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(162, 162, 162)
+                        .addComponent(toggle_free, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(btn_inf, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_doc, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addComponent(Desk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Desk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(170, 170, 170)
+                        .addComponent(btn_mal, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -207,17 +203,17 @@ public class HomeGUI extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_inf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_doc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 21, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btn_doc, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_inf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(toggle_free, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(toggle_NS, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(check_sal))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(toggle_NS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_mal, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(Desk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -240,15 +236,13 @@ public class HomeGUI extends javax.swing.JFrame {
 
     private void btn_infActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_infActionPerformed
         Boolean x;
-        Boolean sal;
         
         this.Desk.removeAll();
         this.Desk.repaint();
         
         x = toggle_NS.isSelected();
-        sal = check_sal.isSelected();
             
-            List_des_employes l_emp = new List_des_employes(x, sal);
+            List_des_employes l_emp = new List_des_employes(x,conn);
             this.Desk.add(l_emp);
             l_emp.show();
     }//GEN-LAST:event_btn_infActionPerformed
@@ -271,7 +265,7 @@ public class HomeGUI extends javax.swing.JFrame {
         
         x = toggle_free.isSelected();
             
-            Liste_des_Docteurs l_doc = new Liste_des_Docteurs(x);
+            Liste_des_Docteurs l_doc = new Liste_des_Docteurs(x, conn);
             this.Desk.add(l_doc);
             l_doc.show();
     }//GEN-LAST:event_btn_docActionPerformed
@@ -282,20 +276,16 @@ public class HomeGUI extends javax.swing.JFrame {
         this.Desk.removeAll();
         this.Desk.repaint();
             
-        Liste_des_malades l_mal = new Liste_des_malades();
+        Liste_des_malades l_mal = new Liste_des_malades(conn);
         this.Desk.add(l_mal);
         l_mal.show();
     }//GEN-LAST:event_btn_malActionPerformed
-
-    private void check_salActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_check_salActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_check_salActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        this.Desk.removeAll();
         this.Desk.repaint();
             
-        Liste_des_services l_ser = new Liste_des_services();
+        Liste_des_services l_ser = new Liste_des_services(conn);
         this.Desk.add(l_ser);
         l_ser.show();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -331,7 +321,7 @@ public class HomeGUI extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new HomeGUI().setVisible(true);
+                new HomeGUI(conn).setVisible(true);
             }
         });
     }
@@ -341,7 +331,6 @@ public class HomeGUI extends javax.swing.JFrame {
     private javax.swing.JButton btn_doc;
     private javax.swing.JButton btn_inf;
     private javax.swing.JButton btn_mal;
-    private javax.swing.JCheckBox check_sal;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -19,13 +19,15 @@ import javax.swing.JOptionPane;
  */
 public class AjoutInfirmier extends javax.swing.JFrame {
 
-    Connection conn = null;
+    static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
-    /** Creates new form AjoutInfirmier */
-    public AjoutInfirmier() {
+    /** Creates new form AjoutInfirmier
+     * @param connexion */
+    public AjoutInfirmier(Connection connexion) {
+        AjoutInfirmier.conn = connexion;
         initComponents();
-        conn = connexionDB.start();
+        //conn = connexionDB.start();
     }
 
     /** This method is called from within the constructor to
@@ -268,7 +270,7 @@ public class AjoutInfirmier extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new AjoutInfirmier().setVisible(true);
+                new AjoutInfirmier(conn).setVisible(true);
             }
         });
     }

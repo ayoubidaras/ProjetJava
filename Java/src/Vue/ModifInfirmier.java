@@ -19,14 +19,16 @@ import javax.swing.JOptionPane;
  */
 public class ModifInfirmier extends javax.swing.JFrame {
 
-    Connection conn = null;
+    static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
     /** Creates new form AjoutInfirmier
-     * @param test */
-    public ModifInfirmier(String test) {
+     * @param test
+     * @param connexion */
+    public ModifInfirmier(String test,Connection connexion) {
+        ModifInfirmier.conn = connexion;
         initComponents();
-        conn = connexionDB.start();
+        //conn = connexionDB.start();
         this.recuperer(test);
         
     }
@@ -328,7 +330,7 @@ public class ModifInfirmier extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new ModifInfirmier(test).setVisible(true);
+                new ModifInfirmier(test,conn).setVisible(true);
             }
         });
     }

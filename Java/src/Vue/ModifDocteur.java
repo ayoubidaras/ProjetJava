@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  */
 public class ModifDocteur extends javax.swing.JFrame {
 
-     Connection conn = null;
+    static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
     /**
@@ -28,9 +28,10 @@ public class ModifDocteur extends javax.swing.JFrame {
      public ModifDocteur() {
     }
      
-    public ModifDocteur(String test) {
+    public ModifDocteur(String test, Connection connexion) {
+        ModifDocteur.conn = connexion;
         initComponents();
-        conn = connexionDB.start();
+       // conn = connexionDB.start();
         this.recuperer(test);
     }
 
@@ -269,8 +270,9 @@ public class ModifDocteur extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new ModifDocteur(test).setVisible(true);
+                new ModifDocteur(test,conn).setVisible(true);
             }
         });
     }

@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package Vue;
-import Controle.connexionDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,15 +16,16 @@ import javax.swing.JOptionPane;
  */
 public class AjoutService extends javax.swing.JFrame {
 
-    Connection conn = null;
+    static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
     /**
      * Creates new form AjoutService
+     * @param connexion
      */
-    public AjoutService() {
+    public AjoutService(Connection connexion) {
+        AjoutService.conn =connexion;
         initComponents();
-        conn = connexionDB.start();
     }
 
     /**
@@ -114,14 +114,13 @@ public class AjoutService extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txt_bat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_bat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
                         .addGap(38, 38, 38))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
                         .addComponent(txt_dir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(23, Short.MAX_VALUE))
         );
@@ -201,7 +200,7 @@ public class AjoutService extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new AjoutService().setVisible(true);
+                new AjoutService(conn).setVisible(true);
             }
         });
     }

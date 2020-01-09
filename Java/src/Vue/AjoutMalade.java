@@ -17,15 +17,17 @@ import javax.swing.JOptionPane;
  * @author olivier
  */
 public class AjoutMalade extends javax.swing.JFrame {
- Connection conn = null;
+    static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
     /**
      * Creates new form AjoutMalade
+     * @param connexion
      */
-    public AjoutMalade() {
+    public AjoutMalade(Connection connexion) {
+        AjoutMalade.conn =connexion;
         initComponents();
-        conn = connexionDB.start();
+      
     }
 
     /**
@@ -213,7 +215,7 @@ public class AjoutMalade extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new AjoutMalade().setVisible(true);
+                new AjoutMalade(conn).setVisible(true);
             }
         });
     }

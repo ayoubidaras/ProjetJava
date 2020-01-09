@@ -24,11 +24,12 @@ public class LoginGUI extends javax.swing.JFrame {
     /**
      * Creates new form LoginGUI
      */
-    Connection conn = null;
+    static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
     
-    public LoginGUI(){
+    public LoginGUI(Connection connexion){
+        this.conn = connexion;
        initComponents();
        setVisible(true);
        
@@ -150,7 +151,7 @@ public class LoginGUI extends javax.swing.JFrame {
                if(rs.next())
                {
                   dispose();
-                  new HomeGUI().setVisible(true);
+                  new HomeGUI(conn).setVisible(true);
                }
                else 
                {
@@ -198,8 +199,9 @@ public class LoginGUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new LoginGUI().setVisible(true);
+                new LoginGUI(conn).setVisible(true);
             }
         });
     }

@@ -24,7 +24,7 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
     /**
      * Creates new form Liste_des_Docteurs
      */
-        Connection conn = null;
+        static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
     static String test;
@@ -32,10 +32,11 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
     public Liste_des_Docteurs() {
         
     }
-     public Liste_des_Docteurs(Boolean x) {
+     public Liste_des_Docteurs(Boolean x, Connection connexion) {
+        this.conn = connexion;
         initComponents();
         remove_title_bar();
-        conn = connexionDB.start();
+        //conn = connexionDB.start();
         Affichage(x);
             
         }
@@ -98,6 +99,64 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
         ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
     }
+    
+     public void search()
+    {
+        if(radio_nom.isSelected())
+            try{
+                String requete1 = "select E.numero, E.prenom, E.nom from DOCTEUR D , EMPLOYE E where E.nom LIKE ? and E.numero = D.numero";
+                ps = conn.prepareStatement(requete1); 
+                ps.setString(1, "%"+txt_search.getText()+"%");
+                rs =ps.executeQuery();
+                Table_doc.setModel(DbUtils.resultSetToTableModel(rs));
+            
+       }catch(SQLException e){
+           System.out.println(e);
+       }
+       
+       
+      if(radio_num.isSelected())
+        try{
+             String requete2 = "select E.numero, E.prenom, E.nom from DOCTEUR D , EMPLOYE E where E.numero LIKE ? and E.numero = D.numero";
+             ps = conn.prepareStatement(requete2); 
+             ps.setString(1,"%"+ txt_search.getText()+"%");
+             rs = ps.executeQuery();
+
+
+             Table_doc.setModel(DbUtils.resultSetToTableModel(rs));
+
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+      
+      if(radio_prenom.isSelected())
+          try{
+             String requete2 = "select E.numero, E.prenom, E.nom from DOCTEUR D , EMPLOYE E where E.prenom LIKE ? and E.numero = D.numero";
+             ps = conn.prepareStatement(requete2); 
+             ps.setString(1,"%"+ txt_search.getText()+"%");
+             rs = ps.executeQuery();
+
+
+             Table_doc.setModel(DbUtils.resultSetToTableModel(rs));
+
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+      
+       if(radio_specialite.isSelected())
+          try{
+             String requete2 = "select E.numero, E.prenom, E.nom , specialite from DOCTEUR D , EMPLOYE E where D.specialite LIKE ? and E.numero = D.numero";
+             ps = conn.prepareStatement(requete2); 
+             ps.setString(1,"%"+ txt_search.getText()+"%");
+             rs = ps.executeQuery();
+
+             Table_doc.setModel(DbUtils.resultSetToTableModel(rs));
+
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+    }
+      
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -108,6 +167,7 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -124,48 +184,83 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
         txt_adresse = new javax.swing.JTextField();
         btn_modif = new javax.swing.JButton();
         btn_suppr = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Table_doc = new javax.swing.JTable();
         Add = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txt_search = new javax.swing.JTextField();
+        radio_num = new javax.swing.JRadioButton();
+        radio_nom = new javax.swing.JRadioButton();
+        radio_prenom = new javax.swing.JRadioButton();
+        radio_specialite = new javax.swing.JRadioButton();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 102, 102));
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setForeground(java.awt.Color.white);
         setTitle("List");
+        setPreferredSize(new java.awt.Dimension(1248, 492));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)), "Informations"));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel4.setText("Numéro de téléphone :");
 
         jLabel3.setText("Prénom :");
 
+        txt_nom.setBackground(new java.awt.Color(240, 240, 240));
+        txt_nom.setBorder(null);
         txt_nom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_nomActionPerformed(evt);
             }
         });
 
+        txt_prenom.setBackground(new java.awt.Color(240, 240, 240));
+        txt_prenom.setBorder(null);
+
+        txt_tel.setBackground(new java.awt.Color(240, 240, 240));
+        txt_tel.setBorder(null);
+
+        txt_specialite.setBackground(new java.awt.Color(240, 240, 240));
+        txt_specialite.setBorder(null);
+
         jLabel5.setText("Adresse :");
 
         jLabel6.setText("Spécialité :");
+
+        txt_numero.setBackground(new java.awt.Color(240, 240, 240));
+        txt_numero.setBorder(null);
 
         jLabel2.setText("Nom :");
 
         jLabel7.setText("ID :");
 
+        txt_adresse.setBackground(new java.awt.Color(240, 240, 240));
+        txt_adresse.setBorder(null);
+
+        btn_modif.setBackground(new java.awt.Color(204, 204, 204));
         btn_modif.setText("Modifier");
+        btn_modif.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_modif.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_modifActionPerformed(evt);
             }
         });
 
+        btn_suppr.setBackground(new java.awt.Color(255, 153, 153));
         btn_suppr.setText("Suppression");
+        btn_suppr.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_suppr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_supprActionPerformed(evt);
             }
         });
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel10.setText("INFORMATIONS :");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -173,6 +268,10 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel10)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,33 +288,34 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_tel))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_adresse))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btn_modif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txt_adresse))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_specialite, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 19, Short.MAX_VALUE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(35, 35, 35)
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txt_specialite, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel7)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txt_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 19, Short.MAX_VALUE))
+                            .addComponent(btn_modif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(96, 96, 96)
+                .addGap(87, 87, 87)
                 .addComponent(btn_suppr, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel10)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(txt_numero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -237,11 +337,11 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txt_specialite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_modif)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addComponent(btn_modif, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btn_suppr)
-                .addGap(6, 6, 6))
+                .addGap(33, 33, 33))
         );
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -268,10 +368,49 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(Table_doc);
 
         Add.setBackground(new java.awt.Color(255, 153, 51));
-        Add.setText("Ajout Doctor");
+        Add.setText("Ajout Docteur");
+        Add.setPreferredSize(new java.awt.Dimension(99, 23));
         Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Rechercher :");
+
+        txt_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_searchActionPerformed(evt);
+            }
+        });
+        txt_search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_searchKeyReleased(evt);
+            }
+        });
+
+        radio_num.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(radio_num);
+        radio_num.setSelected(true);
+        radio_num.setText("Numero");
+
+        radio_nom.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(radio_nom);
+        radio_nom.setText("Nom");
+
+        radio_prenom.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(radio_prenom);
+        radio_prenom.setText("Prénom");
+
+        radio_specialite.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(radio_specialite);
+        radio_specialite.setText("Specialité");
+
+        jButton1.setText("rechercher");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -280,26 +419,47 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addContainerGap()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(radio_num)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radio_nom)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(radio_prenom)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radio_specialite)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(336, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(radio_num)
+                    .addComponent(radio_nom)
+                    .addComponent(radio_prenom)
+                    .addComponent(radio_specialite)
+                    .addComponent(jButton1)
+                    .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -325,12 +485,12 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_Table_docMouseClicked
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
-         AjoutDocteur doc = new AjoutDocteur();
+         AjoutDocteur doc = new AjoutDocteur(conn);
         doc.setVisible(true);
     }//GEN-LAST:event_AddActionPerformed
 
     private void btn_modifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifActionPerformed
-       ModifDocteur doc = new ModifDocteur(test);
+       ModifDocteur doc = new ModifDocteur(test,conn);
         doc.setVisible(true);
     }//GEN-LAST:event_btn_modifActionPerformed
 
@@ -358,12 +518,28 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
        }
     }//GEN-LAST:event_btn_supprActionPerformed
 
+    private void txt_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_searchActionPerformed
+       search();
+    }//GEN-LAST:event_txt_searchActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       search();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
+       search();
+    }//GEN-LAST:event_txt_searchKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Add;
     private javax.swing.JTable Table_doc;
     private javax.swing.JButton btn_modif;
     private javax.swing.JButton btn_suppr;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -373,10 +549,15 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton radio_nom;
+    private javax.swing.JRadioButton radio_num;
+    private javax.swing.JRadioButton radio_prenom;
+    private javax.swing.JRadioButton radio_specialite;
     private javax.swing.JTextField txt_adresse;
     private javax.swing.JTextField txt_nom;
     private javax.swing.JTextField txt_numero;
     private javax.swing.JTextField txt_prenom;
+    private javax.swing.JTextField txt_search;
     private javax.swing.JTextField txt_specialite;
     private javax.swing.JTextField txt_tel;
     // End of variables declaration//GEN-END:variables

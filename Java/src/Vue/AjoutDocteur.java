@@ -5,7 +5,6 @@
  */
 package Vue;
 
-import Controle.connexionDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,15 +17,17 @@ import javax.swing.JOptionPane;
  */
 public class AjoutDocteur extends javax.swing.JFrame {
 
-    Connection conn = null;
+    static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
     /**
      * Creates new form AjoutDocteur
+     * @param connexion
      */
-    public AjoutDocteur() {
+    public AjoutDocteur(Connection connexion) {
+        AjoutDocteur.conn = connexion;
         initComponents();
-        conn = connexionDB.start();
+        //conn = connexionDB.start();
     }
 
     /**
@@ -229,7 +230,7 @@ public class AjoutDocteur extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new AjoutDocteur().setVisible(true);
+                new AjoutDocteur(conn).setVisible(true);
             }
         });
     }

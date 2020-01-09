@@ -5,7 +5,6 @@
  */
 package Vue;
 
-import Controle.connexionDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,16 +22,17 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
     /**
      * Creates new form Liste_des_services
      */
-    Connection conn = null;
+    static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
     static String test;
     
    
-     public Liste_des_services() {
+     public Liste_des_services(Connection connexion) {
+        Liste_des_services.conn = connexion;
         initComponents();
         remove_title_bar();
-        conn = connexionDB.start();
+        //conn = connexionDB.start();
         Affichage();
             
         }
@@ -94,6 +94,76 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
              }
              }
          }
+          
+          public void search()
+    {
+        if(radio_code.isSelected())
+            try{
+                String requete1 = "select code,E.numero, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and code LIKE ?";
+                ps = conn.prepareStatement(requete1); 
+                ps.setString(1, "%"+txt_search.getText()+"%");
+                rs =ps.executeQuery();
+                Table_service.setModel(DbUtils.resultSetToTableModel(rs));
+            
+       }catch(SQLException e){
+           System.out.println(e);
+       }
+       
+       
+      if(radio_nom.isSelected())
+        try{
+             String requete2 = "select code,E.numero, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and S.nom LIKE ?";
+             ps = conn.prepareStatement(requete2); 
+             ps.setString(1,"%"+ txt_search.getText()+"%");
+             rs = ps.executeQuery();
+
+
+             Table_service.setModel(DbUtils.resultSetToTableModel(rs));
+
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+      
+      if(radio_bat.isSelected())
+          try{
+             String requete2 = "select code,E.numero, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and batiment LIKE ?";
+             ps = conn.prepareStatement(requete2); 
+             ps.setString(1,"%"+ txt_search.getText()+"%");
+             rs = ps.executeQuery();
+
+
+             Table_service.setModel(DbUtils.resultSetToTableModel(rs));
+
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+      
+       if(radio_dir.isSelected())
+          try{
+             String requete2 = "select code,E.numero, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and directeur LIKE ?";;
+             ps = conn.prepareStatement(requete2); 
+             ps.setString(1,"%"+ txt_search.getText()+"%");
+             rs = ps.executeQuery();
+
+             Table_service.setModel(DbUtils.resultSetToTableModel(rs));
+
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+       
+       if(radio_nom_dir.isSelected())
+          try{
+             String requete2 = "select code,E.numero, E.nom, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and E.nom LIKE ?";;
+             ps = conn.prepareStatement(requete2); 
+             ps.setString(1,"%"+ txt_search.getText()+"%");
+             rs = ps.executeQuery();
+
+             Table_service.setModel(DbUtils.resultSetToTableModel(rs));
+
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+    }
         
       
          
@@ -115,6 +185,7 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         Add = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -127,10 +198,21 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
         txt_dir = new javax.swing.JTextField();
         btn_modif = new javax.swing.JButton();
         btn_suppr = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Table_service = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        txt_search = new javax.swing.JTextField();
+        btn_search = new javax.swing.JButton();
+        radio_code = new javax.swing.JRadioButton();
+        radio_nom = new javax.swing.JRadioButton();
+        radio_bat = new javax.swing.JRadioButton();
+        radio_dir = new javax.swing.JRadioButton();
+        radio_nom_dir = new javax.swing.JRadioButton();
 
+        setBackground(new java.awt.Color(204, 204, 204));
         setBorder(null);
+        setPreferredSize(new java.awt.Dimension(1248, 492));
 
         Add.setBackground(new java.awt.Color(255, 153, 51));
         Add.setText("Ajout Service");
@@ -140,7 +222,7 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)), "Informations"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel4.setText("Batiment :");
 
@@ -156,56 +238,71 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
 
         jLabel7.setText("Code :");
 
+        btn_modif.setBackground(new java.awt.Color(204, 204, 204));
         btn_modif.setText("Modifier");
+        btn_modif.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_modif.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_modifActionPerformed(evt);
             }
         });
 
+        btn_suppr.setBackground(new java.awt.Color(255, 153, 153));
         btn_suppr.setText("Suppression");
+        btn_suppr.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_suppr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_supprActionPerformed(evt);
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel10.setText("INFORMATIONS :");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txt_code, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(txt_bat, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txt_dir, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(jLabel4))
-                    .addComponent(btn_modif, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_code, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txt_bat, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addComponent(txt_dir, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(39, 39, 39))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(97, 97, 97)
-                .addComponent(btn_suppr, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(btn_modif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel10))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(btn_suppr, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(35, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jLabel10)
+                .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_code, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
@@ -213,21 +310,19 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel4))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_bat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_dir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
-                .addGap(36, 36, 36)
-                .addComponent(btn_modif)
                 .addGap(18, 18, 18)
-                .addComponent(btn_suppr))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txt_bat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txt_dir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_modif, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_suppr)
+                .addGap(42, 42, 42))
         );
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -253,37 +348,93 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(Table_service);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("Recherche :");
+
+        txt_search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_searchKeyReleased(evt);
+            }
+        });
+
+        btn_search.setText("recherche");
+
+        radio_code.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(radio_code);
+        radio_code.setText("Code ");
+
+        radio_nom.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(radio_nom);
+        radio_nom.setText("Nom");
+
+        radio_bat.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(radio_bat);
+        radio_bat.setText("Batiment");
+
+        radio_dir.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(radio_dir);
+        radio_dir.setSelected(true);
+        radio_dir.setText("Directeur");
+
+        radio_nom_dir.setBackground(new java.awt.Color(204, 204, 204));
+        buttonGroup1.add(radio_nom_dir);
+        radio_nom_dir.setText("Numéro du directeur");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btn_search)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(radio_code)
+                .addGap(18, 18, 18)
+                .addComponent(radio_nom)
+                .addGap(18, 18, 18)
+                .addComponent(radio_bat)
+                .addGap(18, 18, 18)
+                .addComponent(radio_dir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(radio_nom_dir)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 337, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
+                .addGap(0, 3, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_search)
+                    .addComponent(radio_code)
+                    .addComponent(radio_nom)
+                    .addComponent(radio_bat)
+                    .addComponent(radio_dir)
+                    .addComponent(radio_nom_dir)
+                    .addComponent(Add))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
-        AjoutService ser = new AjoutService();
+        AjoutService ser = new AjoutService(conn);
         ser.setVisible(true);
     }//GEN-LAST:event_AddActionPerformed
 
@@ -292,7 +443,7 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txt_nomActionPerformed
 
     private void btn_modifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifActionPerformed
-        ModifService ser = new ModifService(test);
+        ModifService ser = new ModifService(test, conn);
         ser.setVisible(true);
     }//GEN-LAST:event_btn_modifActionPerformed
 
@@ -323,21 +474,35 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
         deplacement();
     }//GEN-LAST:event_Table_serviceMouseClicked
 
+    private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
+        search();
+    }//GEN-LAST:event_txt_searchKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Add;
     private javax.swing.JTable Table_service;
     private javax.swing.JButton btn_modif;
+    private javax.swing.JButton btn_search;
     private javax.swing.JButton btn_suppr;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton radio_bat;
+    private javax.swing.JRadioButton radio_code;
+    private javax.swing.JRadioButton radio_dir;
+    private javax.swing.JRadioButton radio_nom;
+    private javax.swing.JRadioButton radio_nom_dir;
     private javax.swing.JTextField txt_bat;
     private javax.swing.JTextField txt_code;
     private javax.swing.JTextField txt_dir;
     private javax.swing.JTextField txt_nom;
+    private javax.swing.JTextField txt_search;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,8 +1,12 @@
 package Controle;
 
 import Vue.LoginGUI;
+import java.sql.Connection;
 
 public class Controler {
+    
+    
+    Connection conn = null;
 	
 	//private LoginGUI l_gui = null;
 	
@@ -11,7 +15,7 @@ public class Controler {
 	{
       
             LoginGUI loginGUI;
-            loginGUI = new LoginGUI();
+            loginGUI = new LoginGUI(conn);
        
     }
 

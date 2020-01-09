@@ -18,14 +18,16 @@ import javax.swing.JOptionPane;
  */
 public class ModifService extends javax.swing.JFrame {
 
-      Connection conn = null;
+    static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
     /**
      * Creates new form ModifService
      * @param test
+     * @param connexion
      */
-    public ModifService(String test) {
+    public ModifService(String test, Connection connexion) {
+        ModifService.conn = connexion;
        initComponents();
         conn = connexionDB.start();
         this.recuperer(test);
@@ -223,7 +225,7 @@ public class ModifService extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new ModifService(test).setVisible(true);
+                new ModifService(test,conn).setVisible(true);
             }
         });
     }
