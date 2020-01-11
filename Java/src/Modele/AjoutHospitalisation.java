@@ -39,13 +39,11 @@ public class AjoutHospitalisation extends javax.swing.JFrame {
     private void initComponents() {
 
         txt_chbr = new javax.swing.JTextField();
-        txt_doc = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         Add = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         txt_pat = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         txt_lit = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
@@ -67,8 +65,6 @@ public class AjoutHospitalisation extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setText("Hospitalisation ");
 
-        jLabel13.setText("Numéros du docteur :");
-
         jLabel1.setText("Numéros de la chambre :");
 
         jLabel2.setText("Numéro du lit :");
@@ -78,27 +74,20 @@ public class AjoutHospitalisation extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_code, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_chbr, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_lit, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_doc, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txt_lit, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 37, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -111,7 +100,7 @@ public class AjoutHospitalisation extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_pat, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
+                        .addGap(127, 127, 127)
                         .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -136,13 +125,9 @@ public class AjoutHospitalisation extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txt_lit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(txt_doc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
                 .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -150,14 +135,13 @@ public class AjoutHospitalisation extends javax.swing.JFrame {
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         try{
-            String requete = "insert into EMPLOYE (numero, nom,prenom, tel, adresse) values (?, ?, ?,?,?)";
+            String requete = "insert into HOSPITALISATION (no_malade, code_service,no_chambre, lit) values (?, ?, ?,?)";
 
             ps = conn.prepareStatement(requete);
             ps.setString(1,txt_pat.getText());
             ps.setString(2,txt_code.getText());
             ps.setString(3,txt_chbr.getText());
             ps.setString(4,txt_lit.getText());
-            ps.setString(5,txt_doc.getText());
             ps.execute();
 
         }catch(SQLException e){
@@ -165,29 +149,13 @@ public class AjoutHospitalisation extends javax.swing.JFrame {
         }finally{
             try{
                 ps.close();
+                JOptionPane.showMessageDialog(null,"Saved");
+                dispose();
             }catch(SQLException e){
                 System.out.println("Exeption 1b" + e);
             }
         }
-        try{
-            String requete2 = "insert into DOCTEUR (numero, specialite) values (?, ?)";
-
-            ps = conn.prepareStatement(requete2);
-            ps.setString(1,txt_pat.getText());
-            ps.setString(2,txt_doc.getText());
-
-            ps.execute();
-
-            JOptionPane.showMessageDialog(null,"Saved");
-            dispose();
-        }catch(SQLException e){
-            System.out.println("Exeption 2a" + e);
-        }finally{
-            try{
-                ps.close();
-            }catch(SQLException e){
-                System.out.println("Exeption 2b" + e);
-            }}
+  
     }//GEN-LAST:event_AddActionPerformed
 
     /**
@@ -231,12 +199,10 @@ public class AjoutHospitalisation extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField txt_chbr;
     private javax.swing.JTextField txt_code;
-    private javax.swing.JTextField txt_doc;
     private javax.swing.JTextField txt_lit;
     private javax.swing.JTextField txt_pat;
     // End of variables declaration//GEN-END:variables
