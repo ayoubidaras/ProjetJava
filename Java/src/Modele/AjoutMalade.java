@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vue;
+package Modele;
 
+import Controle.connexionDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,19 +16,18 @@ import javax.swing.JOptionPane;
  *
  * @author olivier
  */
-public class AjoutDocteur extends javax.swing.JFrame {
-
+public class AjoutMalade extends javax.swing.JFrame {
     static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
     /**
-     * Creates new form AjoutDocteur
+     * Creates new form AjoutMalade
      * @param connexion
      */
-    public AjoutDocteur(Connection connexion) {
-        AjoutDocteur.conn = connexion;
+    public AjoutMalade(Connection connexion) {
+        AjoutMalade.conn =connexion;
         initComponents();
-        //conn = connexionDB.start();
+      
     }
 
     /**
@@ -39,22 +39,31 @@ public class AjoutDocteur extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Add = new javax.swing.JButton();
-        txt_num = new javax.swing.JTextField();
-        txt_prenom = new javax.swing.JTextField();
-        txt_nom = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
         txt_tel = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         txt_adresse = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txt_specialite = new javax.swing.JTextField();
+        Add = new javax.swing.JButton();
+        txt_mutuelle = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        txt_num = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        txt_prenom = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        txt_nom = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setText("Malade");
+
+        jLabel13.setText("Mutuelle :");
+
+        jLabel5.setText("Nom :");
+
+        jLabel6.setText("Prenom :");
 
         Add.setText("Add");
         Add.addActionListener(new java.awt.event.ActionListener() {
@@ -63,20 +72,11 @@ public class AjoutDocteur extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Nom :");
-
-        jLabel6.setText("Prenom :");
-
         jLabel8.setText("Numéro :");
 
         jLabel10.setText("Téléphone :");
 
         jLabel11.setText("Adresse :");
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel12.setText("Docteur :");
-
-        jLabel13.setText("Spécialité");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,7 +115,7 @@ public class AjoutDocteur extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_specialite, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txt_mutuelle, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(125, 125, 125)
@@ -148,7 +148,7 @@ public class AjoutDocteur extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(txt_specialite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_mutuelle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -159,7 +159,7 @@ public class AjoutDocteur extends javax.swing.JFrame {
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         try{
-            String requete = "insert into EMPLOYE (numero, nom,prenom, tel, adresse) values (?, ?, ?,?,?)";
+            String requete = "insert into MALADE (numero, nom,prenom, tel, adresse, mutuelle) values (?, ?, ?,?,?,?)";
 
             ps = conn.prepareStatement(requete);
             ps.setString(1,txt_num.getText());
@@ -167,7 +167,11 @@ public class AjoutDocteur extends javax.swing.JFrame {
             ps.setString(3,txt_prenom.getText());
             ps.setString(4,txt_tel.getText());
             ps.setString(5,txt_adresse.getText());
+            ps.setString(6,txt_mutuelle.getText());
             ps.execute();
+            
+            JOptionPane.showMessageDialog(null,"Saved");
+            dispose();
 
         }catch(SQLException e){
             System.out.println("Exeption 1a" + e);
@@ -178,25 +182,6 @@ public class AjoutDocteur extends javax.swing.JFrame {
                 System.out.println("Exeption 1b" + e);
             }
         }
-        try{
-            String requete2 = "insert into DOCTEUR (numero, specialite) values (?, ?)";
-
-            ps = conn.prepareStatement(requete2);
-            ps.setString(1,txt_num.getText());
-            ps.setString(2,txt_specialite.getText());
-
-            ps.execute();
-
-            JOptionPane.showMessageDialog(null,"Saved");
-            dispose();
-        }catch(SQLException e){
-            System.out.println("Exeption 2a" + e);
-        }finally{
-            try{
-                ps.close();
-            }catch(SQLException e){
-                System.out.println("Exeption 2b" + e);
-            }}
     }//GEN-LAST:event_AddActionPerformed
 
     /**
@@ -216,13 +201,13 @@ public class AjoutDocteur extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AjoutDocteur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AjoutMalade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AjoutDocteur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AjoutMalade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AjoutDocteur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AjoutMalade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AjoutDocteur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AjoutMalade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -230,7 +215,7 @@ public class AjoutDocteur extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new AjoutDocteur(conn).setVisible(true);
+                new AjoutMalade(conn).setVisible(true);
             }
         });
     }
@@ -245,10 +230,10 @@ public class AjoutDocteur extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField txt_adresse;
+    private javax.swing.JTextField txt_mutuelle;
     private javax.swing.JTextField txt_nom;
     private javax.swing.JTextField txt_num;
     private javax.swing.JTextField txt_prenom;
-    private javax.swing.JTextField txt_specialite;
     private javax.swing.JTextField txt_tel;
     // End of variables declaration//GEN-END:variables
 }

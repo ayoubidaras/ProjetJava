@@ -1,6 +1,5 @@
 package Controle;
 
-import Vue.LoginGUI;
 import java.sql.Connection;
 
 public class Controler {

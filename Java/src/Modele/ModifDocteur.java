@@ -3,68 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vue;
+package Modele;
 
-import static Vue.Liste_des_malades.test;
+
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author olivier
  */
-public class ModifMalade extends javax.swing.JFrame {
-    
+public class ModifDocteur extends javax.swing.JFrame {
+
     static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
+    static String test = null;
     /**
-     * Creates new form ModifMalade
-     * @param test
-     * @param connexion
+     * Creates new form ModifDocteur
      */
-    public ModifMalade(String test, Connection connexion) {
-       ModifMalade.conn = connexion;
-       initComponents();
-       this.recuperer(test);
+     public ModifDocteur() {
     }
-    
-    
-    
-     private void recuperer(String test){
-       /* System.out.println("A");
-        List_des_employes inf = new List_des_employes();
-        System.out.println("B");
-        inf.deplacement();
-        System.out.println("C");*/
-        try{
-            
-            String rec = test;
-            String requete = "select * from MALADE where numero ='"+rec+"'";
-            
-            ps =conn.prepareStatement(requete);
-            rs = ps.executeQuery();
-            if(rs.next()){
-                String t1 = rs.getString("numero");
-                txt_num.setText(t1);
-                String t2 = rs.getString("prenom");
-                txt_prenom.setText(t2);
-                String t3 = rs.getString("nom");
-                txt_nom.setText(t3);
-                String t4 = rs.getString("tel");
-                txt_tel.setText(t4);
-                String t5 = rs.getString("adresse");
-                txt_adresse.setText(t5);
-                String t6 = rs.getString("mutuelle");   
-                txt_mutuelle.setText(t6);
-            }
-            
-        }catch(SQLException e){
-            System.out.println("Exeption" + e);
-        }
-       
+     
+    public ModifDocteur(String test, Connection connexion) {
+        ModifDocteur.conn = connexion;
+        initComponents();
+       // conn = connexionDB.start();
+        this.recuperer(test);
     }
 
     /**
@@ -76,35 +45,30 @@ public class ModifMalade extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel10 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        txt_prenom = new javax.swing.JTextField();
-        txt_tel = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        txt_nom = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txt_adresse = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        Modif = new javax.swing.JButton();
-        txt_mutuelle = new javax.swing.JTextField();
+        txt_specialite = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        Modif = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
         txt_num = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txt_prenom = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        txt_nom = new javax.swing.JTextField();
+        txt_tel = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jLabel10.setText("Téléphone :");
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel12.setText("Malade");
-
-        jLabel11.setText("Adresse :");
-
-        jLabel13.setText("Mutuelle :");
 
         jLabel5.setText("Nom :");
 
         jLabel6.setText("Prenom :");
+
+        jLabel8.setText("Numéro :");
+
+        jLabel10.setText("Téléphone :");
 
         Modif.setText("Modifier");
         Modif.addActionListener(new java.awt.event.ActionListener() {
@@ -113,10 +77,15 @@ public class ModifMalade extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Numéro :");
+        jLabel11.setText("Adresse :");
 
-        txt_num.setEditable(false);
+        txt_num.setBackground(new java.awt.Color(240, 240, 240));
         txt_num.setBorder(null);
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setText("Docteur :");
+
+        jLabel13.setText("Spécialité");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -155,7 +124,7 @@ public class ModifMalade extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_mutuelle, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txt_specialite, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(125, 125, 125)
@@ -188,7 +157,7 @@ public class ModifMalade extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(txt_mutuelle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_specialite, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(36, 36, 36)
                 .addComponent(Modif, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -203,26 +172,76 @@ public class ModifMalade extends javax.swing.JFrame {
             String t3 = txt_nom.getText();
             String t4 = txt_tel.getText();
             String t5 = txt_adresse.getText();
-            String t6 = txt_mutuelle.getText();
             
-            String requete = "update MALADE set numero = '"+t1+"', prenom ='"+t2+"', nom ='"+t3+"', tel ='"+t4+"', adresse ='"+t5+"', mutuelle='"+t6+"' where numero = '"+t1+"'";
+            String requete = "update EMPLOYE set numero = '"+t1+"', prenom ='"+t2+"', nom ='"+t3+"', tel ='"+t4+"', adresse ='"+t5+"' where numero = '"+t1+"'";
             try{
             ps = conn.prepareStatement(requete);
             ps.execute();
-            JOptionPane.showMessageDialog(null,"Modifié avec succès");
-            dispose();
 
         }catch(SQLException e){
-            System.out.println("Exeption" + e);
+            System.out.println("Exeption 1a" + e);
         }finally{
             try{
                 ps.close();
             }catch(SQLException e){
-                System.out.println("Exeption" + e);
+                System.out.println("Exeption 1b" + e);
             }
         } 
-    }//GEN-LAST:event_ModifActionPerformed
+        try{
+            String t6 = txt_specialite.getText();
+            
+            String requete2 = "update DOCTEUR set numero = '"+t1+"', specialite= '"+t6+"' where numero = '"+t1+"'";
+            
+            ps = conn.prepareStatement(requete2);
+            ps.execute();
 
+            JOptionPane.showMessageDialog(null,"Modifié avec succès");
+            dispose();
+        }catch(SQLException e){
+            System.out.println("Exeption 2a" + e);
+        }finally{
+            try{
+                ps.close();
+                rs.close();
+            }catch(SQLException e){
+                System.out.println("Exeption 2b" + e);
+            }}
+    }//GEN-LAST:event_ModifActionPerformed
+           
+    
+    private void recuperer(String test){
+       /* System.out.println("A");
+        List_des_employes inf = new List_des_employes();
+        System.out.println("B");
+        inf.deplacement();
+        System.out.println("C");*/
+        try{
+            
+            String rec = test;
+            String requete = "select * from EMPLOYE E, DOCTEUR D where E.numero = D.numero and D.numero ='"+rec+"'";
+            
+            ps =conn.prepareStatement(requete);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                String t1 = rs.getString("numero");
+                txt_num.setText(t1);
+                String t2 = rs.getString("prenom");
+                txt_prenom.setText(t2);
+                String t3 = rs.getString("nom");
+                txt_nom.setText(t3);
+                String t4 = rs.getString("tel");
+                txt_tel.setText(t4);
+                String t5 = rs.getString("adresse");
+                txt_adresse.setText(t5);
+                String t6 = rs.getString("specialite");
+                txt_specialite.setText(t6);     
+            }
+            
+        }catch(SQLException e){
+            System.out.println("Exeption" + e);
+        }
+       
+    }
     /**
      * @param args the command line arguments
      */
@@ -240,13 +259,13 @@ public class ModifMalade extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ModifMalade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModifDocteur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ModifMalade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModifDocteur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ModifMalade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModifDocteur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ModifMalade.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModifDocteur.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -254,7 +273,7 @@ public class ModifMalade extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new ModifMalade(test, conn).setVisible(true);
+                new ModifDocteur(test,conn).setVisible(true);
             }
         });
     }
@@ -269,10 +288,10 @@ public class ModifMalade extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JTextField txt_adresse;
-    private javax.swing.JTextField txt_mutuelle;
     private javax.swing.JTextField txt_nom;
     private javax.swing.JTextField txt_num;
     private javax.swing.JTextField txt_prenom;
+    private javax.swing.JTextField txt_specialite;
     private javax.swing.JTextField txt_tel;
     // End of variables declaration//GEN-END:variables
 }

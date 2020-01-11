@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vue;
+package Controle;
 
-import Controle.Controler;
-import Controle.connexionDB;
+
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.Connection;
@@ -29,7 +28,7 @@ public class LoginGUI extends javax.swing.JFrame {
     PreparedStatement ps = null;
     
     public LoginGUI(Connection connexion){
-        this.conn = connexion;
+        LoginGUI.conn = connexion;
        initComponents();
        setVisible(true);
        

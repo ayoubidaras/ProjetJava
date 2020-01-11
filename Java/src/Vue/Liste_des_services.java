@@ -5,6 +5,8 @@
  */
 package Vue;
 
+import Modele.ModifService;
+import Modele.AjoutService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -5,6 +5,8 @@
  */
 package Vue;
 
+import Modele.ModifInfirmier;
+import Modele.AjoutInfirmier;
 import Controle.connexionDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
