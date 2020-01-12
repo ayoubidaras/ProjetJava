@@ -26,6 +26,7 @@ public class LoginGUI extends javax.swing.JFrame {
     static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
+    Boolean admin = false;
     
     public LoginGUI(Connection connexion){
         LoginGUI.conn = connexion;
@@ -121,7 +122,7 @@ public class LoginGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         getAccessibleContext().setAccessibleName("Log in");
@@ -141,6 +142,15 @@ public class LoginGUI extends javax.swing.JFrame {
     private void btn_coMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_coMouseClicked
      String requete = "select * from Login_table where login= ? and password = ?";
              try{
+                 
+               String verif = "select * from Login_table, SERVICE where login= '"+TextLogin.getText()+"' and login = directeur";
+               ps = conn.prepareStatement(verif);
+               rs = ps.executeQuery();
+               if(rs.next())
+                   admin = true;
+               else
+                   admin = false;
+               
                ps = conn.prepareStatement(requete);
                ps.setString(1, TextLogin.getText());
                String passText = new String(TextPassword.getPassword());
@@ -150,7 +160,7 @@ public class LoginGUI extends javax.swing.JFrame {
                if(rs.next())
                {
                   dispose();
-                  new HomeGUI(conn).setVisible(true);
+                  new HomeGUI(conn, admin).setVisible(true);
                }
                else 
                {

@@ -17,12 +17,14 @@ import java.sql.Connection;
  */
 public class HomeGUI extends javax.swing.JFrame {
     static Connection conn = null;
+    static Boolean admin = false;
     /**
      * Creates new form HomeGUI
      * @param connexion
+     * @param admini
      */
-    public HomeGUI(Connection connexion) {
-        
+    public HomeGUI(Connection connexion, Boolean admini) {
+        HomeGUI.admin = admini;
         HomeGUI.conn = connexion;
         initComponents();
         
@@ -396,7 +398,7 @@ public class HomeGUI extends javax.swing.JFrame {
         
         x = toggle_NS.isSelected();
             
-            List_des_employes l_emp = new List_des_employes(x,conn);
+            List_des_employes l_emp = new List_des_employes(x,conn, admin);
             this.Desk.add(l_emp);
             l_emp.show();
     }//GEN-LAST:event_btn_infActionPerformed
@@ -516,7 +518,7 @@ public class HomeGUI extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new HomeGUI(conn).setVisible(true);
+                new HomeGUI(conn, admin).setVisible(true);
             }
         });
     }

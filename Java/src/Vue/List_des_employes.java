@@ -27,27 +27,23 @@ public class List_des_employes extends javax.swing.JInternalFrame {
     ResultSet rs2 = null ;
     PreparedStatement ps = null;
     static String test;
+    static Boolean admin =null;
     /**
      * Creates new form List_des_employes
+     * @param x
+     * @param connexion
+     * @param admini
      */
-    public List_des_employes() {
-        initComponents();
-       // conn = connexionDB.start();
-        Affichage();
-        /*initComponents();
-        remove_title_bar();
-        
-        conn = connexionDB.start();
-        
-        Affichage();*/
-        
-    }
-    public List_des_employes(Boolean x, Connection connexion) {
+    
+    public List_des_employes(Boolean x, Connection connexion, Boolean admini) {
+        List_des_employes.admin =admini;
         List_des_employes.conn = connexion;
         initComponents();
         remove_title_bar();
-        //conn = connexionDB.start();
-        Affichage(x);  
+        Affichage(x); 
+        
+        if(!admin)
+            radio_sal.setEnabled(false);
         
     }
     
@@ -60,21 +56,6 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                 requete = "select I.numero ,prenom, nom from EMPLOYE E, INFIRMIER I where E.numero = I.numero"; 
            else 
                 requete = "select I.numero ,prenom, nom from EMPLOYE E, INFIRMIER I where E.numero = I.numero and I.rotation ='Nuit'";
-           
-           ps = conn.prepareStatement(requete);
-           rs = ps.executeQuery();
-           Table_Emp.setModel(DbUtils.resultSetToTableModel(rs));
-           
-       }catch(SQLException e){
-           System.out.println("Exeption" + e);
-       }
-    }
-    
-    private void Affichage(){
-       try{
-           String requete;
-           requete = "select I.numero ,prenom, nom, salaire from EMPLOYE E, INFIRMIER I where E.numero = I.numero"; 
-         
            
            ps = conn.prepareStatement(requete);
            rs = ps.executeQuery();
@@ -134,6 +115,9 @@ public class List_des_employes extends javax.swing.JInternalFrame {
     
     public void search()
     {
+        
+        
+        
         if(radio_nom.isSelected())
             try{
                 String requete1 = "select E.numero, E.prenom, E.nom from INFIRMIER I , EMPLOYE E where E.nom LIKE ? and E.numero = I.numero";
