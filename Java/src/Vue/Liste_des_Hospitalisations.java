@@ -7,6 +7,7 @@ package Vue;
 
 import Modele.AjoutHospitalisation;
 import Modele.ModifHospitalisation;
+import static Vue.List_des_employes.conn;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,11 @@ import java.sql.SQLException;
 import javax.swing.JRootPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import net.proteanit.sql.DbUtils;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -196,6 +202,7 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
         txt_search = new javax.swing.JTextField();
         radio_nom = new javax.swing.JRadioButton();
         radio_chbr = new javax.swing.JRadioButton();
+        jButton2 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(204, 204, 204));
         setPreferredSize(new java.awt.Dimension(1248, 492));
@@ -221,7 +228,6 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
         jLabel3.setText("Prénom patient :");
 
         txt_nom.setEditable(false);
-        txt_nom.setBackground(new java.awt.Color(240, 240, 240));
         txt_nom.setBorder(null);
         txt_nom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -230,15 +236,12 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
         });
 
         txt_prenom.setEditable(false);
-        txt_prenom.setBackground(new java.awt.Color(240, 240, 240));
         txt_prenom.setBorder(null);
 
         txt_lit.setEditable(false);
-        txt_lit.setBackground(new java.awt.Color(240, 240, 240));
         txt_lit.setBorder(null);
 
         num_pat.setEditable(false);
-        num_pat.setBackground(new java.awt.Color(240, 240, 240));
         num_pat.setBorder(null);
 
         jLabel5.setText("Numéro du lit :");
@@ -248,7 +251,6 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
         jLabel2.setText("Nom patient :");
 
         txt_chbr.setEditable(false);
-        txt_chbr.setBackground(new java.awt.Color(240, 240, 240));
         txt_chbr.setBorder(null);
 
         btn_modif.setBackground(new java.awt.Color(204, 204, 204));
@@ -275,13 +277,11 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
         jLabel8.setText("Mutuelle patient :");
 
         txt_mut.setEditable(false);
-        txt_mut.setBackground(new java.awt.Color(240, 240, 240));
         txt_mut.setBorder(null);
 
         jLabel9.setText("Code du service :");
 
         txt_code.setEditable(false);
-        txt_code.setBackground(new java.awt.Color(240, 240, 240));
         txt_code.setBorder(null);
         txt_code.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -439,6 +439,14 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
         buttonGroup1.add(radio_chbr);
         radio_chbr.setText("Chambre");
 
+        jButton2.setBackground(new java.awt.Color(255, 153, 51));
+        jButton2.setText("Chambres / Services");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -463,9 +471,12 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addComponent(jButton2))
                     .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(251, Short.MAX_VALUE))
+                .addContainerGap(248, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -479,7 +490,8 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
                     .addComponent(radio_chbr)
                     .addComponent(radio_pat)
                     .addComponent(jButton1)
-                    .addComponent(Add))
+                    .addComponent(Add)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
@@ -547,6 +559,45 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_codeActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String[] codeService = null;
+        int[] nombreChambre = null;
+        int nbLignes = 0;
+        try{
+            String requete = "select code_service, count(no_chambre) from HOSPITALISATION group by code_service";
+            ps = conn.prepareStatement(requete);
+            rs = ps.executeQuery();  
+            rs.last();
+            nbLignes = rs.getRow();
+            codeService = new String[nbLignes];
+            nombreChambre = new int[nbLignes];
+            rs.first();
+            for (int i=0; i<nbLignes; i++){
+                codeService[i] = rs.getString(1);
+                nombreChambre[i] = rs.getInt(2);
+                rs.next();
+            }
+            
+            
+             }catch(SQLException e)
+             {
+                 System.out.println(e);
+             }
+
+
+
+        DefaultPieDataset pieDataset = new DefaultPieDataset();
+        for (int i = 0; i<nbLignes;i++){
+            pieDataset.setValue(codeService[i]+"("+nombreChambre[i]+")", nombreChambre[i]);
+        }
+        JFreeChart chart = ChartFactory.createPieChart("Nombres de chambres par service", pieDataset, true, true, true);
+        PiePlot P = (PiePlot)chart.getPlot();
+        //P.setForegroundAlpha(TOP_ALIGNMENT);
+        ChartFrame frame = new ChartFrame("Nombres de chambres par service", chart);
+        frame.setVisible(true);
+        frame.setSize(450,500);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Add;
@@ -555,6 +606,7 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_suppr;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;

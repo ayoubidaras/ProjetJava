@@ -7,6 +7,7 @@ package Vue;
 
 
 import Modele.AjoutSoin;
+import static Vue.Liste_des_Hospitalisations.conn;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,6 +15,14 @@ import java.sql.SQLException;
 import javax.swing.JRootPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import net.proteanit.sql.DbUtils;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 /**
  *
  * @author olivier
@@ -201,6 +210,7 @@ static Connection conn = null;
         txt_search = new javax.swing.JTextField();
         btn_search = new javax.swing.JButton();
         radio_spe = new javax.swing.JRadioButton();
+        jButton2 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(204, 204, 204));
         setPreferredSize(new java.awt.Dimension(1248, 492));
@@ -383,6 +393,14 @@ static Connection conn = null;
         buttonGroup1.add(radio_spe);
         radio_spe.setText("Spécialité");
 
+        jButton2.setBackground(new java.awt.Color(255, 153, 51));
+        jButton2.setText("Patients / Docteurs");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -406,13 +424,15 @@ static Connection conn = null;
                         .addComponent(radio_spe)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(116, 116, 116)
+                        .addGap(25, 25, 25)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 328, Short.MAX_VALUE))
+                .addGap(0, 290, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -427,7 +447,8 @@ static Connection conn = null;
                     .addComponent(radio_doc)
                     .addComponent(radio_doc_nom)
                     .addComponent(jButton1)
-                    .addComponent(radio_spe))
+                    .addComponent(radio_spe)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -466,6 +487,49 @@ static Connection conn = null;
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_searchActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String[] docteurs = null;
+        int[] nombrePatients = null;
+        int nbLignes = 0;
+        try{
+            String requete = "select E.prenom, E.nom, count(S.no_malade) from EMPLOYE E, SOIGNE S where E.numero = S.no_docteur group by no_docteur";
+            ps = conn.prepareStatement(requete);
+            rs = ps.executeQuery();  
+            rs.last();
+            nbLignes = rs.getRow();
+            docteurs = new String[nbLignes];
+            nombrePatients = new int[nbLignes];
+            rs.first();
+            for (int i=0; i<nbLignes; i++){
+                docteurs[i] = rs.getString(1)+" "+rs.getString(2);
+                nombrePatients[i] = rs.getInt(3);
+                rs.next();
+            }
+            
+            
+             }catch(SQLException e)
+             {
+                 System.out.println(e);
+             }
+
+
+
+        
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        for (int i = 0; i<nbLignes;i++){
+            
+            dataset.addValue(nombrePatients[i], docteurs[i]+"("+nombrePatients[i]+")", docteurs[i]+"("+nombrePatients[i]+")");
+        }
+        
+        JFreeChart chart1 = ChartFactory.createBarChart("Nombres de patients pour chaque docteur", "Docteurs", "Nombre de patients", dataset, PlotOrientation.VERTICAL, true,true,false);
+        
+        //P.setForegroundAlpha(TOP_ALIGNMENT);
+        ChartFrame frame1 = new ChartFrame("Nombres de patients pour chaque docteur", chart1);
+        frame1.setVisible(true);
+        frame1.setSize(1200,700);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Table_soin;
@@ -473,6 +537,7 @@ static Connection conn = null;
     private javax.swing.JButton btn_suppr;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
