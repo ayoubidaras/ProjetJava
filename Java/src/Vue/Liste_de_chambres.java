@@ -260,7 +260,7 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(Table_chbr);
 
         Add.setBackground(new java.awt.Color(255, 153, 51));
-        Add.setText("Ajout chmabre");
+        Add.setText("Ajout chambre");
         Add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AddActionPerformed(evt);

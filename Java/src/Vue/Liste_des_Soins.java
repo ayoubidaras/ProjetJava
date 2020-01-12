@@ -62,7 +62,7 @@ static Connection conn = null;
          {
              try{
                 int row = Table_soin.getSelectedRow();
-                Liste_des_Soins.test = (Table_soin.getModel().getValueAt(row, 0).toString());
+                Liste_des_Soins.test = (Table_soin.getModel().getValueAt(row,Table_soin.getColumn("no_malade").getModelIndex()).toString());
                 String requete = "select * from SOIGNE, MALADE where no_malade = '"+test+"' and no_malade = numero";
                 ps = conn.prepareStatement(requete);
                 rs = ps.executeQuery();
@@ -77,7 +77,10 @@ static Connection conn = null;
                     
                 }
                 
-                requete ="select * from SOIGNE , DOCTEUR D, EMPLOYE E where no_malade = '"+test+"' and no_docteur = D.numero and E.numero = D.numero";
+                row = Table_soin.getSelectedRow();
+                Liste_des_Soins.test = (Table_soin.getModel().getValueAt(row,Table_soin.getColumn("no_docteur").getModelIndex()).toString());
+                
+                requete ="select * from SOIGNE , DOCTEUR D, EMPLOYE E where no_docteur = '"+test+"' and no_docteur = D.numero and E.numero = D.numero";
                 ps = conn.prepareStatement(requete);
                 rs = ps.executeQuery();
                 
@@ -99,7 +102,7 @@ static Connection conn = null;
     {
         if(radio_pat_nom.isSelected())
             try{
-                String requete1 = "select no_malade, M.nom, no_docteur, D.nom from SOIGNE S, MALADE M, DOCTEUR D where D.numero = no_docteur and M.numero = no_malade and M.nom LIKE ?";
+                String requete1 = "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D where D.numero = no_docteur and M.numero = no_malade and M.nom LIKE ?";
                 ps = conn.prepareStatement(requete1); 
                 ps.setString(1, "%"+txt_search.getText()+"%");
                 rs =ps.executeQuery();
@@ -112,7 +115,7 @@ static Connection conn = null;
        
       if(radio_pat.isSelected())
         try{
-             String requete2 = "select no_malade, M.nom, no_docteur, D.nom from SOIGNE S, MALADE M, DOCTEUR D where D.numero = no_docteur and M.numero = no_malade and no_malade LIKE ?";
+             String requete2 = "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and no_malade LIKE ?";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -126,7 +129,7 @@ static Connection conn = null;
       
       if(radio_doc.isSelected())
           try{
-             String requete2 =  "select no_malade, M.nom, no_docteur, D.nom from SOIGNE S, MALADE M, DOCTEUR D where D.numero = no_docteur and M.numero = no_malade and no_docteur LIKE ?";
+             String requete2 =  "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and no_docteur LIKE ?";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -140,7 +143,7 @@ static Connection conn = null;
       
        if(radio_doc_nom.isSelected())
           try{
-             String requete2 =  "select no_malade, M.nom, no_docteur, D.nom from SOIGNE S, MALADE M, DOCTEUR D where D.numero = no_docteur and M.numero = no_malade and D.nom LIKE ?";
+             String requete2 =  "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and D.nom LIKE ?";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -152,7 +155,7 @@ static Connection conn = null;
         }
          if(radio_spe.isSelected())
           try{
-             String requete2 =  "select no_malade, M.nom, no_docteur, D.nom from SOIGNE S, MALADE M, DOCTEUR D where D.numero = no_docteur and M.numero = no_malade and D.specialite LIKE ?";
+             String requete2 =  "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D  , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and D.specialite LIKE ?";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();

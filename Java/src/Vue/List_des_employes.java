@@ -59,7 +59,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
            if(x == false)
                 requete = "select I.numero ,prenom, nom from EMPLOYE E, INFIRMIER I where E.numero = I.numero"; 
            else 
-                requete = "select I.numero ,prenom, nom from EMPLOYE E, INFIRMIER I where E.numero = I.numero and rotation =NUIT";
+                requete = "select I.numero ,prenom, nom from EMPLOYE E, INFIRMIER I where E.numero = I.numero and I.rotation ='Nuit'";
            
            ps = conn.prepareStatement(requete);
            rs = ps.executeQuery();

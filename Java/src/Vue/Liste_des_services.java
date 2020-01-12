@@ -376,11 +376,11 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
         radio_dir.setBackground(new java.awt.Color(204, 204, 204));
         buttonGroup1.add(radio_dir);
         radio_dir.setSelected(true);
-        radio_dir.setText("Directeur");
+        radio_dir.setText("N°Directeur");
 
         radio_nom_dir.setBackground(new java.awt.Color(204, 204, 204));
         buttonGroup1.add(radio_nom_dir);
-        radio_nom_dir.setText("Numéro du directeur");
+        radio_nom_dir.setText("Directeur");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

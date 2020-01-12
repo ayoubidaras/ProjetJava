@@ -392,7 +392,7 @@
           <ComponentRef name="buttonGroup1"/>
         </Property>
         <Property name="selected" type="boolean" value="true"/>
-        <Property name="text" type="java.lang.String" value="Directeur"/>
+        <Property name="text" type="java.lang.String" value="N&#xb0;Directeur"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JRadioButton" name="radio_nom_dir">
@@ -403,7 +403,7 @@
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="buttonGroup1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Num&#xe9;ro du directeur"/>
+        <Property name="text" type="java.lang.String" value="Directeur"/>
       </Properties>
     </Component>
   </SubComponents>
