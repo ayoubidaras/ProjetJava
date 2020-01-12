@@ -247,6 +247,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         radio_ser = new javax.swing.JRadioButton();
         radio_rot = new javax.swing.JRadioButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 102, 102));
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -382,7 +383,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
                                 .addComponent(txt_rotation, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 201, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(95, 95, 95)
@@ -494,16 +495,24 @@ public class List_des_employes extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton4.setBackground(new java.awt.Color(255, 153, 51));
+        jButton4.setText("Salaires Moyens");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel8)
@@ -525,9 +534,11 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                         .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
-                        .addComponent(jButton3)))
-                .addContainerGap(194, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton4)))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -546,7 +557,8 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                         .addComponent(btn_search))
                     .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton3)))
+                        .addComponent(jButton3)
+                        .addComponent(jButton4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -650,13 +662,49 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         DefaultPieDataset pieDataset = new DefaultPieDataset();
         pieDataset.setValue("Jour ("+jour+")", jour);
         pieDataset.setValue("Nuit ("+nuit+")", nuit);
-        JFreeChart chart = ChartFactory.createPieChart("Pie Chart", pieDataset, true, true, true);
+        JFreeChart chart = ChartFactory.createPieChart("Nombres d'infirmiers en fonction de la rotation", pieDataset, true, true, true);
         PiePlot P = (PiePlot)chart.getPlot();
         //P.setForegroundAlpha(TOP_ALIGNMENT);
-        ChartFrame frame = new ChartFrame("Pie Chart", chart);
+        ChartFrame frame = new ChartFrame("Nombres d'infirmiers en fonction de la rotation", chart);
         frame.setVisible(true);
         frame.setSize(450,500);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int salaireMoyenJour = 0;
+        int salaireMoyenNuit = 0;
+        try{
+            String requeteNuit = "select sum(salaire), count(*) from INFIRMIER where rotation='Nuit'";
+            ps = conn.prepareStatement(requeteNuit);
+            rs = ps.executeQuery();     
+            rs.next();
+            salaireMoyenNuit = rs.getInt(1)/rs.getInt(2);
+
+            String requeteJour = "select sum(salaire), count(*) from INFIRMIER where rotation='Jour'";
+            ps = conn.prepareStatement(requeteJour);
+            rs = ps.executeQuery();
+            rs.next();
+            salaireMoyenJour = rs.getInt(1)/rs.getInt(2);
+
+
+
+             }catch(SQLException e)
+             {
+                 System.out.println(e);
+             }
+
+
+
+        DefaultPieDataset pieDataset = new DefaultPieDataset();
+        pieDataset.setValue("Jour ("+salaireMoyenJour+")", salaireMoyenJour);
+        pieDataset.setValue("Nuit ("+salaireMoyenNuit+")", salaireMoyenNuit);
+        JFreeChart chart = ChartFactory.createPieChart("Salaire Moyen en fonction de la rotation", pieDataset, true, true, true);
+        PiePlot P = (PiePlot)chart.getPlot();
+        //P.setForegroundAlpha(TOP_ALIGNMENT);
+        ChartFrame frame = new ChartFrame("Salaire Moyen en fonction de la rotation", chart);
+        frame.setVisible(true);
+        frame.setSize(450,500);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -667,6 +715,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
