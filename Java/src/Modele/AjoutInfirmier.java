@@ -6,7 +6,6 @@
 
 package Modele;
 
-import Controle.connexionDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -59,7 +58,7 @@ public class AjoutInfirmier extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txt_salaire = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setText("Nom :");
 
@@ -199,19 +198,11 @@ public class AjoutInfirmier extends javax.swing.JFrame {
           ps.setString(4,txt_tel.getText());
           ps.setString(5,txt_adresse.getText());
           ps.execute();
+           ps.close();
           
           
           
-        }catch(SQLException e){
-           System.out.println("Exeption 1a" + e); 
-        }finally{
-            try{
-                ps.close();
-            }catch(SQLException e){
-           System.out.println("Exeption 1b" + e); 
-        }
-        }
-        try{
+        
            String requete2 = "insert into INFIRMIER (numero, code_service,salaire, rotation) values (?, ?, ?,?)"; 
           
           ps = conn.prepareStatement(requete2);
@@ -228,15 +219,11 @@ public class AjoutInfirmier extends javax.swing.JFrame {
           
           JOptionPane.showMessageDialog(null,"Saved");
           dispose();
-        }catch(SQLException e){
-           System.out.println("Exeption 2a" + e); 
-        }finally{
-            try{
-                ps.close();
+          ps.close();
                 rs.close();
-            }catch(SQLException e){
-           System.out.println("Exeption 2b" + e); 
-        }}
+        }catch(SQLException e){
+           JOptionPane.showMessageDialog(null,"Numéro Infirmier déjà utilisé");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

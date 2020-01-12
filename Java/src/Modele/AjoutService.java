@@ -134,9 +134,6 @@ public class AjoutService extends javax.swing.JFrame {
             
             String var = txt_dir.getText();
             String verif ="select * from DOCTEUR where numero = '"+var+"'";
-            
-          
-            
             ps = conn.prepareStatement(verif);
             rs =  ps.executeQuery();
              
@@ -152,20 +149,19 @@ public class AjoutService extends javax.swing.JFrame {
 
                     JOptionPane.showMessageDialog(null,"Saved");
                     dispose();
+                    
+                    ps.close();
+                    rs.close();
              }catch(SQLException e){
-                     System.out.println("Exeption 1a" + e);
+                     JOptionPane.showMessageDialog(null,"Code de Service déjà connu");
               }
+             }
+             else{
+                 JOptionPane.showMessageDialog(null,"Docteur inconnu au bataillon");
              }
 
         }catch(SQLException e){
-            System.out.println("Exeption 1b" + e);
-        }finally{
-            try{
-                ps.close();
-                rs.close();
-            }catch(SQLException e){
-                System.out.println("Exeption 2" + e);
-            }
+            JOptionPane.showMessageDialog(null,e);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

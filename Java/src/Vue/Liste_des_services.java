@@ -228,17 +228,28 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Batiment :");
 
+        txt_nom.setEditable(false);
+        txt_nom.setBorder(null);
         txt_nom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_nomActionPerformed(evt);
             }
         });
 
+        txt_bat.setEditable(false);
+        txt_bat.setBorder(null);
+
         jLabel5.setText("Directeur :");
+
+        txt_code.setEditable(false);
+        txt_code.setBorder(null);
 
         jLabel2.setText("Nom :");
 
         jLabel7.setText("Code :");
+
+        txt_dir.setEditable(false);
+        txt_dir.setBorder(null);
 
         btn_modif.setBackground(new java.awt.Color(204, 204, 204));
         btn_modif.setText("Modifier");
@@ -359,7 +370,9 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_search.setBackground(new java.awt.Color(204, 204, 204));
         btn_search.setText("recherche");
+        btn_search.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         radio_code.setBackground(new java.awt.Color(204, 204, 204));
         buttonGroup1.add(radio_code);
@@ -376,11 +389,11 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
         radio_dir.setBackground(new java.awt.Color(204, 204, 204));
         buttonGroup1.add(radio_dir);
         radio_dir.setSelected(true);
-        radio_dir.setText("Directeur");
+        radio_dir.setText("N°Directeur");
 
         radio_nom_dir.setBackground(new java.awt.Color(204, 204, 204));
         buttonGroup1.add(radio_nom_dir);
-        radio_nom_dir.setText("Numéro du directeur");
+        radio_nom_dir.setText("Directeur");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -391,9 +404,7 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_search)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(radio_code)
                 .addGap(18, 18, 18)
                 .addComponent(radio_nom)
@@ -403,14 +414,16 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
                 .addComponent(radio_dir)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(radio_nom_dir)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 337, Short.MAX_VALUE))
+                .addGap(0, 326, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

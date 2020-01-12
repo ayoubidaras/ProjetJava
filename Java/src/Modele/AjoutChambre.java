@@ -21,6 +21,7 @@ public class AjoutChambre extends javax.swing.JFrame {
           static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
+    int ok =2;
     /**
      * Creates new form AjoutChambre
      * @param connexion
@@ -68,7 +69,7 @@ public class AjoutChambre extends javax.swing.JFrame {
 
         jLabel13.setText("n° chambre :");
 
-        jLabel5.setText("Nombre de surveillants :");
+        jLabel5.setText("Surveillant :");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,26 +133,50 @@ public class AjoutChambre extends javax.swing.JFrame {
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         try{
+            
+            ok =2;
             String requete = "insert into CHAMBRE (code_service, no_chambre,surveillant, nb_lits) values (?, ?, ?,?)";
-
+            
+            String var = txt_code.getText();
+            String verif ="select * from SERVICE where code = '"+var+"'";
+            
+            ps = conn.prepareStatement(verif);
+            rs =  ps.executeQuery();
+            
+            if(rs.next())
+                ok--;
+            else{
+                JOptionPane.showMessageDialog(null,"Service non répertorié");
+            }
+            
+            String var2 = txt_sur.getText();
+            String verif2 ="select * from INFIRMIER where numero = '"+var2+"'";
+            
+            ps = conn.prepareStatement(verif2);
+            rs =  ps.executeQuery();
+            
+            if(rs.next())
+                ok--;
+            else{
+                JOptionPane.showMessageDialog(null,"Infirmier ou Infirmière non reconnu");
+            }
+            
+                
+            if(ok == 0){
             ps = conn.prepareStatement(requete);
             ps.setString(1,txt_code.getText());
             ps.setString(2,txt_chbr.getText());
             ps.setString(3,txt_sur.getText());
             ps.setString(4,txt_lit.getText());
+            
             ps.execute();
             
             JOptionPane.showMessageDialog(null,"Saved");
             dispose();
+            }
 
         }catch(SQLException e){
-            System.out.println("Exeption 1a" + e);
-        }finally{
-            try{
-                ps.close();
-            }catch(SQLException e){
-                System.out.println("Exeption 1b" + e);
-            }
+            JOptionPane.showMessageDialog(null,"Chambre déjà existante");
         }
     }//GEN-LAST:event_AddActionPerformed
 

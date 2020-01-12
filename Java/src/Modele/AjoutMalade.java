@@ -54,7 +54,7 @@ public class AjoutMalade extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txt_nom = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setText("Malade");
@@ -169,18 +169,13 @@ public class AjoutMalade extends javax.swing.JFrame {
             ps.setString(5,txt_adresse.getText());
             ps.setString(6,txt_mutuelle.getText());
             ps.execute();
+            ps.close();
             
             JOptionPane.showMessageDialog(null,"Saved");
             dispose();
 
         }catch(SQLException e){
-            System.out.println("Exeption 1a" + e);
-        }finally{
-            try{
-                ps.close();
-            }catch(SQLException e){
-                System.out.println("Exeption 1b" + e);
-            }
+             JOptionPane.showMessageDialog(null,"Numéro déjà utilisé");
         }
     }//GEN-LAST:event_AddActionPerformed
 

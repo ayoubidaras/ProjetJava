@@ -20,6 +20,7 @@ public class AjoutHospitalisation extends javax.swing.JFrame {
     static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
+    int ok = 5;
     /**
      * Creates new form AjoutHospitalisation
      * @param connexion
@@ -49,7 +50,7 @@ public class AjoutHospitalisation extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txt_code = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel8.setText("Numéro du patient :");
 
@@ -135,6 +136,79 @@ public class AjoutHospitalisation extends javax.swing.JFrame {
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         try{
+            ok =5;
+            String var = txt_code.getText();
+            String verif ="select * from SERVICE where code = '"+var+"'";
+            
+            ps = conn.prepareStatement(verif);
+            rs =  ps.executeQuery();
+            
+            if(rs.next())
+                ok--;
+            else{
+                JOptionPane.showMessageDialog(null,"Service non répertorié");
+            }
+            
+            /////////////////////////////////////////////////////////////////////
+            
+            var = txt_chbr.getText();
+            verif ="select * from CHAMBRE where no_chambre = '"+var+"'";
+            
+            ps = conn.prepareStatement(verif);
+            rs =  ps.executeQuery();
+            
+            if(rs.next())
+                ok--;
+            else{
+                JOptionPane.showMessageDialog(null,"Cette chambre n'a pas encore été construite");
+            }
+            
+             /////////////////////////////////////////////////////////////////////
+            
+            var = txt_pat.getText();
+            verif ="select * from MALADE where numero = '"+var+"'";
+            
+            ps = conn.prepareStatement(verif);
+            rs =  ps.executeQuery();
+            
+            if(rs.next())
+                ok--;
+            else{
+                JOptionPane.
+            showMessageDialog(null,"Malade inexistant");
+            }
+            
+             /////////////////////////////////////////////////////////////////////
+             
+            var = txt_lit.getText();
+            verif ="select * from CHAMBRE where '"+var+"' <= nb_lits";
+            
+            ps = conn.prepareStatement(verif);
+            rs =  ps.executeQuery();
+            
+            if(rs.next())
+                ok--;
+            else{
+                JOptionPane.showMessageDialog(null,"Pas assez de lits dans la chambre");
+            }
+            
+             /////////////////////////////////////////////////////////////////////
+             
+             var = txt_lit.getText();
+            verif ="select * from HOSPITALISATION where lit = '"+var+"' and no_chambre = '"+txt_chbr.getText()+"'";
+            
+            ps = conn.prepareStatement(verif);
+            rs =  ps.executeQuery();
+            
+            if(rs.next())
+                JOptionPane.showMessageDialog(null,"Lit déjà utilisé");
+                
+            else{
+                ok--;                
+            }
+            
+             /////////////////////////////////////////////////////////////////////
+            if(ok == 0){
             String requete = "insert into HOSPITALISATION (no_malade, code_service,no_chambre, lit) values (?, ?, ?,?)";
 
             ps = conn.prepareStatement(requete);
@@ -143,17 +217,14 @@ public class AjoutHospitalisation extends javax.swing.JFrame {
             ps.setString(3,txt_chbr.getText());
             ps.setString(4,txt_lit.getText());
             ps.execute();
+            
+            ps.close();
+                JOptionPane.showMessageDialog(null,"Saved");
+                dispose();
+            }
 
         }catch(SQLException e){
             System.out.println("Exeption 1a" + e);
-        }finally{
-            try{
-                ps.close();
-                JOptionPane.showMessageDialog(null,"Saved");
-                dispose();
-            }catch(SQLException e){
-                System.out.println("Exeption 1b" + e);
-            }
         }
   
     }//GEN-LAST:event_AddActionPerformed

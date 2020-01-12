@@ -48,11 +48,9 @@ public class ModifService extends javax.swing.JFrame {
             String requete = "select * from SERVICE where code ='"+test+"'";
             ps =conn.prepareStatement(requete);
             rs = ps.executeQuery();
-            System.out.println(test);
             
             
             if(rs.next()){
-                 System.out.println(requete);
                 String t1 = rs.getString("code");
                 txt_code.setText(t1);
                 String t2 = rs.getString("nom");
@@ -176,19 +174,24 @@ public class ModifService extends javax.swing.JFrame {
 
         String requete = "update SERVICE set code = '"+t1+"', nom ='"+t2+"', batiment ='"+t3+"', directeur ='"+t4+"' where code = '"+t1+"'";
         try{
-            ps = conn.prepareStatement(requete);
-            ps.execute();
-            JOptionPane.showMessageDialog(null,"Modifié avec succès");
-            dispose();
+            String verif ="select * from DOCTEUR where numero = '"+t4+"'";
+            ps = conn.prepareStatement(verif);
+            rs =  ps.executeQuery();
+             
+             if(rs.next())
+             {
+                    ps = conn.prepareStatement(requete);
+                    ps.execute();
+                    JOptionPane.showMessageDialog(null,"Modifié avec succès");
+                    dispose();
+                    ps.close();
+             }
+             else{
+                JOptionPane.showMessageDialog(null,"Docteur inconnu au bataillon");  
+             }
 
         }catch(SQLException e){
-            System.out.println("Exeption" + e);
-        }finally{
-            try{
-                ps.close();
-            }catch(SQLException e){
-                System.out.println("Exeption" + e);
-            }
+          JOptionPane.showMessageDialog(null,"Code de Service déjà connu");
         }
     }//GEN-LAST:event_ModifActionPerformed
 
