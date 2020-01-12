@@ -15,6 +15,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import net.proteanit.sql.DbUtils;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -243,6 +248,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         radio_sal = new javax.swing.JRadioButton();
         radio_ser = new javax.swing.JRadioButton();
         radio_rot = new javax.swing.JRadioButton();
+        jButton3 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 102, 102));
         setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -426,7 +432,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         );
 
         add.setBackground(new java.awt.Color(255, 153, 51));
-        add.setText("Ajout Infirmière");
+        add.setText("Ajout Infirmier");
         add.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addActionPerformed(evt);
@@ -482,6 +488,14 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         buttonGroup1.add(radio_rot);
         radio_rot.setText("Rotation");
 
+        jButton3.setBackground(new java.awt.Color(255, 153, 51));
+        jButton3.setText("Rotations");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
@@ -512,8 +526,10 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(196, Short.MAX_VALUE))
+                        .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(49, 49, 49)
+                        .addComponent(jButton3)))
+                .addContainerGap(194, Short.MAX_VALUE))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -530,7 +546,9 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                         .addComponent(radio_ser)
                         .addComponent(radio_rot)
                         .addComponent(btn_search))
-                    .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -601,6 +619,46 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_searchActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        int jour = 0;
+        int nuit = 0;
+        try{
+            String requeteNuit = "select count(*) from INFIRMIER where rotation='Nuit'";
+            ps = conn.prepareStatement(requeteNuit);
+            rs = ps.executeQuery();     
+            rs.next();
+            nuit = rs.getInt(1);
+
+            String requeteJour = "select count(*) from INFIRMIER where rotation='Jour'";
+            ps = conn.prepareStatement(requeteJour);
+            rs = ps.executeQuery();
+            rs.next();
+            jour = rs.getInt(1);
+
+
+
+             }catch(SQLException e)
+             {
+                 System.out.println(e);
+             }
+
+
+
+        DefaultPieDataset pieDataset = new DefaultPieDataset();
+        pieDataset.setValue("Jour ("+jour+")", jour);
+        pieDataset.setValue("Nuit ("+nuit+")", nuit);
+        JFreeChart chart = ChartFactory.createPieChart("Pie Chart", pieDataset, true, true, true);
+        PiePlot P = (PiePlot)chart.getPlot();
+        //P.setForegroundAlpha(TOP_ALIGNMENT);
+        ChartFrame frame = new ChartFrame("Pie Chart", chart);
+        frame.setVisible(true);
+        frame.setSize(450,500);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Table_Emp;
@@ -609,6 +667,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
     private javax.swing.JButton btn_suppr;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
