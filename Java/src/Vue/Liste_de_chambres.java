@@ -339,7 +339,7 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         });
 
         btn_suppr.setBackground(new java.awt.Color(255, 153, 153));
-        btn_suppr.setText("Suppression");
+        btn_suppr.setText("Supprimer");
         btn_suppr.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_suppr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -373,10 +373,6 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(btn_suppr, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -414,6 +410,10 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txt_lit)))))
                 .addContainerGap())
+            .addGroup(panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_suppr, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -454,9 +454,9 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
                     .addComponent(txt_mut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(btn_modif, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(40, 40, 40)
                 .addComponent(btn_suppr)
-                .addGap(33, 33, 33))
+                .addContainerGap())
         );
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));

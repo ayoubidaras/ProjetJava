@@ -32,7 +32,6 @@ public class ModifDocteur extends javax.swing.JFrame {
     public ModifDocteur(String test, Connection connexion) {
         ModifDocteur.conn = connexion;
         initComponents();
-       // conn = connexionDB.start();
         this.recuperer(test);
     }
 
@@ -210,11 +209,7 @@ public class ModifDocteur extends javax.swing.JFrame {
            
     
     private void recuperer(String test){
-       /* System.out.println("A");
-        List_des_employes inf = new List_des_employes();
-        System.out.println("B");
-        inf.deplacement();
-        System.out.println("C");*/
+     
         try{
             
             String rec = test;
