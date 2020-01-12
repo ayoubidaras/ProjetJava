@@ -199,6 +199,9 @@ static Connection conn = null;
         btn_search = new javax.swing.JButton();
         radio_spe = new javax.swing.JRadioButton();
 
+        setBackground(new java.awt.Color(204, 204, 204));
+        setPreferredSize(new java.awt.Dimension(1248, 492));
+
         radio_pat.setBackground(new java.awt.Color(204, 204, 204));
         buttonGroup1.add(radio_pat);
         radio_pat.setSelected(true);
@@ -366,9 +369,9 @@ static Connection conn = null;
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)

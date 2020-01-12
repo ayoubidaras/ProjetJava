@@ -54,7 +54,7 @@ public class AjoutDocteur extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         Add.setText("Add");
         Add.addActionListener(new java.awt.event.ActionListener() {
@@ -160,25 +160,14 @@ public class AjoutDocteur extends javax.swing.JFrame {
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         try{
             String requete = "insert into EMPLOYE (numero, nom,prenom, tel, adresse) values (?, ?, ?,?,?)";
-
-            ps = conn.prepareStatement(requete);
-            ps.setString(1,txt_num.getText());
-            ps.setString(2,txt_nom.getText());
-            ps.setString(3,txt_prenom.getText());
-            ps.setString(4,txt_tel.getText());
-            ps.setString(5,txt_adresse.getText());
-            ps.execute();
-
-        }catch(SQLException e){
-            System.out.println("Exeption 1a" + e);
-        }finally{
-            try{
-                ps.close();
-            }catch(SQLException e){
-                System.out.println("Exeption 1b" + e);
-            }
-        }
-        try{
+                ps = conn.prepareStatement(requete);
+                ps.setString(1,txt_num.getText());
+                ps.setString(2,txt_nom.getText());
+                ps.setString(3,txt_prenom.getText());
+                ps.setString(4,txt_tel.getText());
+                ps.setString(5,txt_adresse.getText());
+                ps.execute();
+                 ps.close();
             String requete2 = "insert into DOCTEUR (numero, specialite) values (?, ?)";
 
             ps = conn.prepareStatement(requete2);
@@ -186,17 +175,14 @@ public class AjoutDocteur extends javax.swing.JFrame {
             ps.setString(2,txt_specialite.getText());
 
             ps.execute();
+            ps.close();
 
             JOptionPane.showMessageDialog(null,"Saved");
             dispose();
         }catch(SQLException e){
-            System.out.println("Exeption 2a" + e);
-        }finally{
-            try{
-                ps.close();
-            }catch(SQLException e){
-                System.out.println("Exeption 2b" + e);
-            }}
+           JOptionPane.showMessageDialog(null,"Numéro déjà utilisé");
+                dispose();
+        }
     }//GEN-LAST:event_AddActionPerformed
 
     /**

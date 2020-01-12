@@ -20,6 +20,7 @@ public class ModifHospitalisation extends javax.swing.JFrame {
     ResultSet rs = null ;
     PreparedStatement ps = null;
     static String test = null;
+    int ok = 5;
     /**
      * Creates new form ModifHospitalisation
      * @param test
@@ -174,10 +175,73 @@ public class ModifHospitalisation extends javax.swing.JFrame {
 
         String requete = "update HOSPITALISATION set no_malade = '"+t1+"', code_service ='"+t2+"', no_chambre ='"+t4+"', lit ='"+t5+"' where no_malade = '"+t1+"'";
         try{
+            
+            ok =5;
+            String var = txt_code.getText();
+            String verif ="select * from SERVICE where code = '"+var+"'";
+            
+            ps = conn.prepareStatement(verif);
+            rs =  ps.executeQuery();
+            
+            if(rs.next())
+                ok--;
+            else{
+                JOptionPane.showMessageDialog(null,"Service non répertorié");
+            }
+            
+            /////////////////////////////////////////////////////////////////////
+            
+            var = txt_chbr.getText();
+            verif ="select * from CHAMBRE where no_chambre = '"+var+"'";
+            
+            ps = conn.prepareStatement(verif);
+            rs =  ps.executeQuery();
+            
+            if(rs.next())
+                ok--;
+            else{
+                JOptionPane.showMessageDialog(null,"Cette chambre n'a pas encore été construite");
+            }
+            
+             /////////////////////////////////////////////////////////////////////
+           
+            
+             /////////////////////////////////////////////////////////////////////
+             
+            var = txt_lit.getText();
+            verif ="select * from CHAMBRE where '"+var+"' <= nb_lits";
+            
+            ps = conn.prepareStatement(verif);
+            rs =  ps.executeQuery();
+            
+            if(rs.next())
+                ok--;
+            else{
+                JOptionPane.showMessageDialog(null,"Pas assez de lits dans la chambre");
+            }
+            
+             /////////////////////////////////////////////////////////////////////
+             
+             var = txt_lit.getText();
+            verif ="select * from HOSPITALISATION where lit = '"+var+"' and no_chambre = '"+txt_chbr.getText()+"'";
+            
+            ps = conn.prepareStatement(verif);
+            rs =  ps.executeQuery();
+            
+            if(rs.next())
+                JOptionPane.showMessageDialog(null,"Lit déjà utilisé");
+                
+            else{
+                ok--;                
+            }
+            
+             /////////////////////////////////////////////////////////////////////
+            if(ok == 0){
             ps = conn.prepareStatement(requete);
             ps.execute();
             JOptionPane.showMessageDialog(null,"Modifié avec succès");
             dispose();
+            }
 
         }catch(SQLException e){
             System.out.println("Exeption" + e);

@@ -14,17 +14,17 @@ import javax.swing.JOptionPane;
  *
  * @author olivier
  */
-public class AjoutSoin extends javax.swing.JFrame {
-    
-        static Connection conn = null;
+public class AjoutLogin extends javax.swing.JFrame {
+
+      
+    static Connection conn = null;
     ResultSet rs = null ;
     PreparedStatement ps = null;
     /**
-     * Creates new form AjoutSoin
-     * @param connexion
+     * Creates new form AjoutLogin
      */
-    public AjoutSoin(Connection connexion) {
-        AjoutSoin.conn =connexion;
+    public AjoutLogin(Connection connexion) {
+        AjoutLogin.conn =connexion;
         initComponents();
     }
 
@@ -37,19 +37,14 @@ public class AjoutSoin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel12 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         Add = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         txt_num = new javax.swing.JTextField();
-        txt_doc = new javax.swing.JTextField();
+        txt_pass = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel12.setText("Hospitalisation :");
-
-        jLabel5.setText("Numéro du Docteur :");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         Add.setText("Add");
         Add.addActionListener(new java.awt.event.ActionListener() {
@@ -59,6 +54,11 @@ public class AjoutSoin extends javax.swing.JFrame {
         });
 
         jLabel8.setText("Numéro :");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel12.setText("New Login :");
+
+        jLabel5.setText("Password");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -77,11 +77,11 @@ public class AjoutSoin extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_doc, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(61, 61, 61)
                         .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -95,10 +95,10 @@ public class AjoutSoin extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txt_doc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -106,20 +106,20 @@ public class AjoutSoin extends javax.swing.JFrame {
 
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         try{
-            String requete = "insert into SOIGNE (no_malade, no_docteur) values (?, ?)";
-            
+            String requete = "insert into Login_table (login, password) values (?, ?)";
+
             ps = conn.prepareStatement(requete);
-                        ps.setString(1,txt_num.getText());
-                        ps.setString(2,txt_doc.getText());
-                        ps.execute();
+            ps.setString(1,txt_num.getText());
+            ps.setString(2,txt_pass.getText());
+            ps.execute();
 
-                        JOptionPane.showMessageDialog(null,"Saved");
-                        dispose();
+            JOptionPane.showMessageDialog(null,"Saved");
+            dispose();
 
-                         }catch(SQLException e){
-                             System.out.println(e);
-                                 JOptionPane.showMessageDialog(null,"Docteur ou Malade non existant..");
-                          }
+        }catch(SQLException e){
+            System.out.println(e);
+            JOptionPane.showMessageDialog(null,"Employé inexistant");
+        }
     }//GEN-LAST:event_AddActionPerformed
 
     /**
@@ -139,13 +139,13 @@ public class AjoutSoin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AjoutSoin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AjoutLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AjoutSoin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AjoutLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AjoutSoin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AjoutLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AjoutSoin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AjoutLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -153,7 +153,7 @@ public class AjoutSoin extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new AjoutSoin(conn).setVisible(true);
+                new AjoutLogin(conn).setVisible(true);
             }
         });
     }
@@ -163,7 +163,7 @@ public class AjoutSoin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField txt_doc;
     private javax.swing.JTextField txt_num;
+    private javax.swing.JTextField txt_pass;
     // End of variables declaration//GEN-END:variables
 }

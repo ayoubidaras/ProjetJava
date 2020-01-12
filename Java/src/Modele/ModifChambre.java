@@ -84,7 +84,7 @@ public class ModifChambre extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txt_lit = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel6.setText("Code du service :");
 
@@ -177,10 +177,38 @@ public class ModifChambre extends javax.swing.JFrame {
 
         String requete = "update CHAMBRE set no_chambre = '"+t1+"', code_service ='"+t2+"', surveillant ='"+t3+"', nb_lits ='"+t4+"' where no_chambre = '"+t1+"'";
         try{
+             int ok =2;
+            
+            
+            String verif ="select * from SERVICE where code = '"+t2+"'";
+            
+            ps = conn.prepareStatement(verif);
+            rs =  ps.executeQuery();
+            
+            if(rs.next())
+                ok--;
+            else{
+                JOptionPane.showMessageDialog(null,"Service non répertorié");
+            }
+            
+            
+            String verif2 ="select * from INFIRMIER where numero = '"+t3+"'";
+            
+            ps = conn.prepareStatement(verif2);
+            rs =  ps.executeQuery();
+            
+            if(rs.next())
+                ok--;
+            else{
+                JOptionPane.showMessageDialog(null,"Infirmier ou Infirmière non reconnu");
+            }
+            
+                
+            if(ok == 0){
             ps = conn.prepareStatement(requete);
             ps.execute();
             JOptionPane.showMessageDialog(null,"Modifié avec succès");
-            dispose();
+            dispose();}
 
         }catch(SQLException e){
             System.out.println("Exeption" + e);

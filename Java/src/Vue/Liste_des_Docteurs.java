@@ -49,7 +49,7 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
            if(x == false)
                 requete = "select D.numero, prenom, nom  from EMPLOYE E, DOCTEUR D where E.numero = D.numero";
            else
-                requete = "select D.numero, prenom, nom  from EMPLOYE E, DOCTEUR D, SOIGNE S where D.numero not in (select no_docteur from SOIGNE) and E.numero = D.numero";   
+                requete = "(select D.numero, prenom, nom  from EMPLOYE E, DOCTEUR D, SOIGNE S where E.numero = D.numero ) MINUS (select * from SOIGNE, DOCTEUR where numero = no_docteur ) ";   
            
            ps = conn.prepareStatement(requete);
            rs = ps.executeQuery();

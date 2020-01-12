@@ -7,7 +7,6 @@ package Vue;
 
 import Modele.ModifInfirmier;
 import Modele.AjoutInfirmier;
-import Controle.connexionDB;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -180,7 +179,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
           try{
              String requete2 = "select E.numero, E.prenom, E.nom, salaire from INFIRMIER I , EMPLOYE E where I.salaire LIKE ? and E.numero = I.numero";
              ps = conn.prepareStatement(requete2); 
-             ps.setString(1,"%"+ txt_search.getText()+"%");
+             ps.setString(1, txt_search.getText()+"%");
              rs2 = ps.executeQuery();
 
 
@@ -272,6 +271,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         jScrollPane1.setBackground(new java.awt.Color(102, 102, 102));
         jScrollPane1.setPreferredSize(new java.awt.Dimension(1248, 492));
 
+        Table_Emp.setAutoCreateRowSorter(true);
         Table_Emp.setBackground(new java.awt.Color(153, 153, 153));
         Table_Emp.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -354,25 +354,21 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(19, 19, 19)
-                                .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txt_prenom, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel10)))
+                        .addComponent(jLabel2)
+                        .addGap(19, 19, 19)
+                        .addComponent(txt_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_prenom, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel10))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
