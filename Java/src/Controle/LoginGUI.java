@@ -64,21 +64,11 @@ public class LoginGUI extends javax.swing.JFrame {
         TextPassword.setBackground(new java.awt.Color(255, 153, 51));
         TextPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TextPassword.setText("admin");
-        TextPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextPasswordActionPerformed(evt);
-            }
-        });
         jPanel1.add(TextPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 160, 40));
 
         TextLogin.setBackground(new java.awt.Color(255, 153, 51));
         TextLogin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         TextLogin.setText("1");
-        TextLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TextLoginActionPerformed(evt);
-            }
-        });
         jPanel1.add(TextLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 160, 40));
 
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));
@@ -97,12 +87,7 @@ public class LoginGUI extends javax.swing.JFrame {
                 btn_coMouseClicked(evt);
             }
         });
-        btn_co.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_coActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btn_co, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+        jPanel1.add(btn_co, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Agency FB", 0, 48)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 153, 0));
@@ -125,15 +110,6 @@ public class LoginGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_coActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_coActionPerformed
-                 
-                 
-    }//GEN-LAST:event_btn_coActionPerformed
-
-    private void TextPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextPasswordActionPerformed
-
     private void btn_coMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_coMouseClicked
      String requete = "select * from Login_table where login= ? and password = ?";
              try{
@@ -141,10 +117,7 @@ public class LoginGUI extends javax.swing.JFrame {
                String verif = "select * from Login_table, SERVICE where login= '"+TextLogin.getText()+"' and login = directeur";
                ps = conn.prepareStatement(verif);
                rs = ps.executeQuery();
-               if(rs.next())
-                   admin = true;
-               else
-                   admin = false;
+               admin = rs.next();
                
                ps = conn.prepareStatement(requete);
                ps.setString(1, TextLogin.getText());
@@ -169,10 +142,6 @@ public class LoginGUI extends javax.swing.JFrame {
             System.err.print(e);
         }
     }//GEN-LAST:event_btn_coMouseClicked
-
-    private void TextLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TextLoginActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TextLoginActionPerformed
 
     /**
      * @param args the command line arguments

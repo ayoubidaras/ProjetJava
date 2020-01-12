@@ -280,43 +280,36 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         jLabel1.setText("Numero :");
 
         txt_numero.setEditable(false);
-        txt_numero.setBackground(new java.awt.Color(240, 240, 240));
         txt_numero.setBorder(null);
 
         jLabel2.setText("Nom :");
 
         txt_nom.setEditable(false);
-        txt_nom.setBackground(new java.awt.Color(240, 240, 240));
         txt_nom.setBorder(null);
 
         jLabel3.setText("Prénom :");
 
         txt_prenom.setEditable(false);
-        txt_prenom.setBackground(new java.awt.Color(240, 240, 240));
         txt_prenom.setBorder(null);
 
         jLabel4.setText("Numéros de téléphone :");
 
         txt_tel.setEditable(false);
-        txt_tel.setBackground(new java.awt.Color(240, 240, 240));
         txt_tel.setBorder(null);
 
         jLabel5.setText("Adresse :");
 
         txt_adresse.setEditable(false);
-        txt_adresse.setBackground(new java.awt.Color(240, 240, 240));
         txt_adresse.setBorder(null);
 
         jLabel6.setText("Code de service :");
 
         txt_service.setEditable(false);
-        txt_service.setBackground(new java.awt.Color(240, 240, 240));
         txt_service.setBorder(null);
 
         jLabel7.setText("Rotation :");
 
         txt_rotation.setEditable(false);
-        txt_rotation.setBackground(new java.awt.Color(240, 240, 240));
         txt_rotation.setBorder(null);
 
         jButton1.setBackground(new java.awt.Color(204, 204, 204));
@@ -383,7 +376,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
                                 .addComponent(txt_rotation, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 34, Short.MAX_VALUE)))
+                        .addGap(0, 201, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(95, 95, 95)
@@ -492,7 +485,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -517,8 +510,8 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(363, Short.MAX_VALUE))
+                        .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

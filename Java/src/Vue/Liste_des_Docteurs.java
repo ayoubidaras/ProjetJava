@@ -213,7 +213,6 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
         jLabel3.setText("Prénom :");
 
         txt_nom.setEditable(false);
-        txt_nom.setBackground(new java.awt.Color(240, 240, 240));
         txt_nom.setBorder(null);
         txt_nom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,15 +221,12 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
         });
 
         txt_prenom.setEditable(false);
-        txt_prenom.setBackground(new java.awt.Color(240, 240, 240));
         txt_prenom.setBorder(null);
 
         txt_tel.setEditable(false);
-        txt_tel.setBackground(new java.awt.Color(240, 240, 240));
         txt_tel.setBorder(null);
 
         txt_specialite.setEditable(false);
-        txt_specialite.setBackground(new java.awt.Color(240, 240, 240));
         txt_specialite.setBorder(null);
 
         jLabel5.setText("Adresse :");
@@ -238,7 +234,6 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
         jLabel6.setText("Spécialité :");
 
         txt_numero.setEditable(false);
-        txt_numero.setBackground(new java.awt.Color(240, 240, 240));
         txt_numero.setBorder(null);
 
         jLabel2.setText("Nom :");
@@ -246,7 +241,6 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
         jLabel7.setText("ID :");
 
         txt_adresse.setEditable(false);
-        txt_adresse.setBackground(new java.awt.Color(240, 240, 240));
         txt_adresse.setBorder(null);
 
         btn_modif.setBackground(new java.awt.Color(204, 204, 204));
@@ -308,7 +302,7 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel7)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txt_numero, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 19, Short.MAX_VALUE))))
+                                .addGap(0, 186, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(87, 87, 87)
                         .addComponent(btn_suppr, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -444,9 +438,9 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
                         .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(336, Short.MAX_VALUE))
+                    .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(169, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

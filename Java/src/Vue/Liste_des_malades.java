@@ -232,43 +232,36 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
         jLabel2.setText("Prénom :");
 
         txt_prenom.setEditable(false);
-        txt_prenom.setBackground(new java.awt.Color(240, 240, 240));
         txt_prenom.setBorder(null);
 
         jLabel3.setText("Numero :");
 
         txt_numero.setEditable(false);
-        txt_numero.setBackground(new java.awt.Color(240, 240, 240));
         txt_numero.setBorder(null);
 
         jLabel4.setText("Numéro de télephone :");
 
         txt_tel.setEditable(false);
-        txt_tel.setBackground(new java.awt.Color(240, 240, 240));
         txt_tel.setBorder(null);
 
         jLabel5.setText("Adresse :");
 
         txt_adresse.setEditable(false);
-        txt_adresse.setBackground(new java.awt.Color(240, 240, 240));
         txt_adresse.setBorder(null);
 
         jLabel6.setText("Mutuelle :");
 
         txt_mutuelle.setEditable(false);
-        txt_mutuelle.setBackground(new java.awt.Color(240, 240, 240));
         txt_mutuelle.setBorder(null);
 
         jLabel7.setText("Docteur attitré :");
 
         txt_doc.setEditable(false);
-        txt_doc.setBackground(new java.awt.Color(240, 240, 240));
         txt_doc.setBorder(null);
 
         jLabel8.setText("Chambre n° :");
 
         txt_chbr.setEditable(false);
-        txt_chbr.setBackground(new java.awt.Color(240, 240, 240));
         txt_chbr.setBorder(null);
 
         jButton3.setBackground(new java.awt.Color(204, 204, 204));
@@ -321,7 +314,7 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(11, 11, 11)
-                                .addComponent(txt_adresse, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txt_adresse, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
@@ -330,7 +323,7 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txt_mutuelle, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(23, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
@@ -341,7 +334,7 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btn_suppr, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 189, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
