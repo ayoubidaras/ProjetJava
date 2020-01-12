@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import net.proteanit.sql.DbUtils;
@@ -102,7 +103,7 @@ static Connection conn = null;
     {
         if(radio_pat_nom.isSelected())
             try{
-                String requete1 = "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D, EMPLOYE E where D.numero =E.numero and D.numero = no_docteur and M.numero = no_malade and M.nom LIKE ?";
+                String requete1 = "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D, EMPLOYE E where D.numero =E.numero and D.numero = no_docteur and M.numero = no_malade and M.nom LIKE ? order by M.nom";
                 ps = conn.prepareStatement(requete1); 
                 ps.setString(1, "%"+txt_search.getText()+"%");
                 rs =ps.executeQuery();
@@ -115,7 +116,7 @@ static Connection conn = null;
        
       if(radio_pat.isSelected())
         try{
-             String requete2 = "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and no_malade LIKE ?";
+             String requete2 = "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and no_malade LIKE ? order by no_malade";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -129,7 +130,7 @@ static Connection conn = null;
       
       if(radio_doc.isSelected())
           try{
-             String requete2 =  "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and no_docteur LIKE ?";
+             String requete2 =  "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and no_docteur LIKE ? order by no_docteur";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -143,7 +144,7 @@ static Connection conn = null;
       
        if(radio_doc_nom.isSelected())
           try{
-             String requete2 =  "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and E.nom LIKE ?";
+             String requete2 =  "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and E.nom LIKE ? order by E.nom";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -155,7 +156,7 @@ static Connection conn = null;
         }
          if(radio_spe.isSelected())
           try{
-             String requete2 =  "select no_malade, M.nom, no_docteur, E.nom , D.specialite from SOIGNE S, MALADE M, DOCTEUR D  , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and D.specialite LIKE ?";
+             String requete2 =  "select no_malade, M.nom, no_docteur, E.nom , D.specialite from SOIGNE S, MALADE M, DOCTEUR D  , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and D.specialite LIKE ? order by D.specialite";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -165,6 +166,11 @@ static Connection conn = null;
         }catch(SQLException e){
             System.out.println(e);
         }
+    }
+    
+        public String gettableresult()
+    {
+        return test;
     }
 
     /**
@@ -451,7 +457,27 @@ static Connection conn = null;
     }//GEN-LAST:event_txt_nomActionPerformed
 
     private void btn_supprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_supprActionPerformed
-        
+         try{
+             
+             int row = Table_soin.getSelectedRow();
+             String var = (Table_soin.getModel().getValueAt(row,Table_soin.getColumn("no_docteur").getModelIndex()).toString());
+             String var2= (Table_soin.getModel().getValueAt(row,Table_soin.getColumn("no_malade").getModelIndex()).toString());
+
+            String requete2 = "delete from SOIGNE where no_docteur ='"+var+"' and no_malade = '"+var2+"'";
+            if(JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir le supprimer ?",
+                "Supprimer", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
+
+        {
+            ps = conn.prepareStatement(requete2);
+            ps.execute();
+
+            JOptionPane.showMessageDialog(null,"Supprimé avec succès");
+            dispose();
+        }
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+         Affichage();
     }//GEN-LAST:event_btn_supprActionPerformed
 
     private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased

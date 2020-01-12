@@ -68,7 +68,7 @@ public class LoginGUI extends javax.swing.JFrame {
 
         TextLogin.setBackground(new java.awt.Color(255, 153, 51));
         TextLogin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        TextLogin.setText("1");
+        TextLogin.setText("80");
         jPanel1.add(TextLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 160, 40));
 
         jLabel1.setForeground(new java.awt.Color(255, 153, 0));

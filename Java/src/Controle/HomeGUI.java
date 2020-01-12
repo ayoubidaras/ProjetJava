@@ -56,7 +56,6 @@ public class HomeGUI extends javax.swing.JFrame {
         btn_doc = new javax.swing.JButton();
         btn_inf = new javax.swing.JButton();
         toggle_NS = new javax.swing.JToggleButton();
-        toggle_free = new javax.swing.JToggleButton();
         jPanel6 = new javax.swing.JPanel();
         btn_chbr = new javax.swing.JButton();
         check_occ = new javax.swing.JCheckBox();
@@ -199,15 +198,6 @@ public class HomeGUI extends javax.swing.JFrame {
             }
         });
 
-        toggle_free.setBackground(new java.awt.Color(51, 204, 255));
-        toggle_free.setText("Libre");
-        toggle_free.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        toggle_free.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                toggle_freeActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -218,19 +208,15 @@ public class HomeGUI extends javax.swing.JFrame {
                     .addComponent(btn_inf, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_doc, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(toggle_NS, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(toggle_free, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(toggle_NS, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_doc, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(toggle_free, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_doc, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(toggle_NS, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                     .addComponent(btn_inf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -418,10 +404,8 @@ public class HomeGUI extends javax.swing.JFrame {
         
         this.Desk.removeAll();
         this.Desk.repaint();
-        
-        x = toggle_free.isSelected();
             
-            Liste_des_Docteurs l_doc = new Liste_des_Docteurs(x, conn);
+            Liste_des_Docteurs l_doc = new Liste_des_Docteurs( conn);
             this.Desk.add(l_doc);
             l_doc.show();
     }//GEN-LAST:event_btn_docActionPerformed
@@ -477,10 +461,6 @@ public class HomeGUI extends javax.swing.JFrame {
         this.Desk.add(l_soin);
         l_soin.show();
     }//GEN-LAST:event_btn_soinActionPerformed
-
-    private void toggle_freeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggle_freeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_toggle_freeActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         AjoutLogin log = new AjoutLogin(conn);
@@ -544,6 +524,5 @@ public class HomeGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JToggleButton toggle_NS;
-    private javax.swing.JToggleButton toggle_free;
     // End of variables declaration//GEN-END:variables
 }

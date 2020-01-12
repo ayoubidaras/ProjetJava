@@ -31,25 +31,21 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
     PreparedStatement ps = null;
     static String test;
     
-    public Liste_des_Docteurs() {
-        
-    }
-     public Liste_des_Docteurs(Boolean x, Connection connexion) {
+    
+     public Liste_des_Docteurs(Connection connexion) {
         Liste_des_Docteurs.conn = connexion;
         initComponents();
         remove_title_bar();
         //conn = connexionDB.start();
-        Affichage(x);
+        Affichage();
             
         }
      
-         private void Affichage(Boolean x){
+         private void Affichage(){
        try{
            String requete;
-           if(x == false)
                 requete = "select D.numero, prenom, nom  from EMPLOYE E, DOCTEUR D where E.numero = D.numero";
-           else
-                requete = "select D.numero, prenom, nom  from EMPLOYE E, DOCTEUR D, SOIGNE S where E.numero = D.numero and D.numero not in (select no_docteur from SOIGNE, DOCTEUR D, EMPLOYE E where D.numero = no_docteur and E.numero = no_docteur) ";   
+            
            
            ps = conn.prepareStatement(requete);
            rs = ps.executeQuery();
@@ -106,7 +102,7 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
     {
         if(radio_nom.isSelected())
             try{
-                String requete1 = "select E.numero, E.prenom, E.nom from DOCTEUR D , EMPLOYE E where E.nom LIKE ? and E.numero = D.numero";
+                String requete1 = "select E.numero, E.prenom, E.nom from DOCTEUR D , EMPLOYE E where E.nom LIKE ? and E.numero = D.numero ORDER BY E.nom";
                 ps = conn.prepareStatement(requete1); 
                 ps.setString(1, "%"+txt_search.getText()+"%");
                 rs =ps.executeQuery();
@@ -119,7 +115,7 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
        
       if(radio_num.isSelected())
         try{
-             String requete2 = "select E.numero, E.prenom, E.nom from DOCTEUR D , EMPLOYE E where E.numero LIKE ? and E.numero = D.numero";
+             String requete2 = "select E.numero, E.prenom, E.nom from DOCTEUR D , EMPLOYE E where E.numero LIKE ? and E.numero = D.numero ORDER BY E.numero";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -133,7 +129,7 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
       
       if(radio_prenom.isSelected())
           try{
-             String requete2 = "select E.numero, E.prenom, E.nom from DOCTEUR D , EMPLOYE E where E.prenom LIKE ? and E.numero = D.numero";
+             String requete2 = "select E.numero, E.prenom, E.nom from DOCTEUR D , EMPLOYE E where E.prenom LIKE ? and E.numero = D.numero ORDER BY E.prenom";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -147,7 +143,7 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
       
        if(radio_specialite.isSelected())
           try{
-             String requete2 = "select E.numero, E.prenom, E.nom , specialite from DOCTEUR D , EMPLOYE E where D.specialite LIKE ? and E.numero = D.numero";
+             String requete2 = "select E.numero, E.prenom, E.nom , specialite from DOCTEUR D , EMPLOYE E where D.specialite LIKE ? and E.numero = D.numero ORDER BY D.specialite";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -498,15 +494,12 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
          try{ 
            
             
-            String requete2 = "delete from DOCTEUR where numero ='"+gettableresult()+"'";
-            String requete = "delete from EMPLOYE where numero ='"+gettableresult()+"'";
+            String requete2 = "delete from EMPLOYE where numero ='"+gettableresult()+"'";
             System.out.println(test);
             if(JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir le supprimer ?",
                                         "Supprimer", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
           
         {
-                ps = conn.prepareStatement(requete);
-                ps.execute();
                 ps = conn.prepareStatement(requete2);
                 ps.execute();
 
@@ -516,6 +509,7 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
        }catch(SQLException e){
            System.out.println(e);
        }
+         Affichage();
     }//GEN-LAST:event_btn_supprActionPerformed
 
     private void txt_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_searchActionPerformed

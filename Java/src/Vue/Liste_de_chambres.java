@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import net.proteanit.sql.DbUtils;
@@ -45,7 +46,7 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
            if(x==false)
            requete = "select * from CHAMBRE";
            else
-             requete =  "select lit, C.no_chambre, nom, prenom, H.no_malade from CHAMBRE C ,MALADE M, HOSPITALISATION H where numero = H.no_malade and H.no_chambre = C.no_chambre";
+             requete =  "select lit, C.no_chambre, nom, H.no_malade, C.code_service from CHAMBRE C ,MALADE M, HOSPITALISATION H where numero = H.no_malade and H.no_chambre = C.no_chambre";
            //requete = "select lit, C.no_chambre, nom, prenom, H.no_malade from CHAMBRE C ,MALADE M, HOSPITALISATION H where numero = H.no_malade and H.no_chambre = C.no_chambre";  
            ps = conn.prepareStatement(requete);
            rs = ps.executeQuery();
@@ -110,7 +111,6 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
                      txt_sur.setText(t5);
                      String t8 = rs.getString("code_service");
                         txt_code.setText(t8);
-                     String t4 = "disabled";
                      jLabel5.setEnabled(false);
                      jLabel6.setEnabled(false);
                      jLabel2.setEnabled(false);
@@ -144,7 +144,7 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
     {
         if(radio_nom.isSelected())
             try{
-                String requete1 = "select lit, C.no_chambre, nom, prenom, H.no_malade from CHAMBRE C ,MALADE M, HOSPITALISATION H where numero = H.no_malade and H.no_chambre = C.no_chambre and nom LIKE ?";
+                String requete1 = "select lit, C.no_chambre, nom, H.no_malade, C.code_service from CHAMBRE C ,MALADE M, HOSPITALISATION H where numero = H.no_malade and H.no_chambre = C.no_chambre and nom LIKE ? order by nom";
                 ps = conn.prepareStatement(requete1); 
                 ps.setString(1, "%"+txt_search.getText()+"%");
                 rs =ps.executeQuery();
@@ -155,23 +155,23 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
        }
        
        
-      if(radio_lit.isSelected())
-        try{
-             String requete2 ="select lit, C.no_chambre, nom, prenom, H.no_malade from CHAMBRE C ,MALADE M, HOSPITALISATION H where numero = H.no_malade and H.no_chambre = C.no_chambre and lit LIKE ?";
-             ps = conn.prepareStatement(requete2); 
-             ps.setString(1,"%"+ txt_search.getText()+"%");
-             rs = ps.executeQuery();
-
-
-             Table_chbr.setModel(DbUtils.resultSetToTableModel(rs));
-
-        }catch(SQLException e){
-            System.out.println(e);
-        }
+//      if(radio_lit.isSelected())
+//        try{
+//             String requete2 ="select lit, C.no_chambre, nom, H.no_malade, C.code_service from CHAMBRE C ,MALADE M, HOSPITALISATION H where numero = H.no_malade and H.no_chambre = C.no_chambre and lit LIKE ?";
+//             ps = conn.prepareStatement(requete2); 
+//             ps.setString(1,"%"+ txt_search.getText()+"%");
+//             rs = ps.executeQuery();
+//
+//
+//             Table_chbr.setModel(DbUtils.resultSetToTableModel(rs));
+//
+//        }catch(SQLException e){
+//            System.out.println(e);
+//        }
       
       if(radio_chbr.isSelected())
           try{
-             String requete2 = "select lit, C.no_chambre, nom, prenom, H.no_malade from CHAMBRE C ,MALADE M, HOSPITALISATION H where numero = H.no_malade and H.no_chambre = C.no_chambre and H.no_chambre LIKE ?";
+             String requete2 = "select * from CHAMBRE where no_chambre LIKE ? order by no_chambre";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -185,7 +185,7 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
       
        if(radio_pat.isSelected())
           try{
-             String requete2 = "select lit, C.no_chambre, nom, prenom, H.no_malade from CHAMBRE C ,MALADE M, HOSPITALISATION H where numero = H.no_malade and H.no_chambre = C.no_chambre and H.no_malade LIKE ?";
+             String requete2 = "select lit, C.no_chambre, nom, H.no_malade, C.code_service from CHAMBRE C ,MALADE M, HOSPITALISATION H where numero = H.no_malade and H.no_chambre = C.no_chambre and H.no_malade LIKE ? order by H.no_malade";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -195,6 +195,11 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         }catch(SQLException e){
             System.out.println(e);
         }
+    }
+      
+       public String gettableresult()
+    {
+        return test;
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -207,7 +212,6 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         Add = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txt_search = new javax.swing.JTextField();
-        radio_lit = new javax.swing.JRadioButton();
         panel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -231,6 +235,8 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         jButton1 = new javax.swing.JButton();
         radio_nom = new javax.swing.JRadioButton();
         radio_chbr = new javax.swing.JRadioButton();
+
+        setBackground(new java.awt.Color(204, 204, 204));
 
         radio_pat.setBackground(new java.awt.Color(204, 204, 204));
         buttonGroup1.add(radio_pat);
@@ -281,11 +287,6 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
             }
         });
 
-        radio_lit.setBackground(new java.awt.Color(204, 204, 204));
-        buttonGroup1.add(radio_lit);
-        radio_lit.setSelected(true);
-        radio_lit.setText("n° lit");
-
         panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel4.setText("nombre de surveillant :");
@@ -293,7 +294,6 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         jLabel3.setText("Prénom patient :");
 
         txt_nom.setEditable(false);
-        txt_nom.setBackground(new java.awt.Color(240, 240, 240));
         txt_nom.setBorder(null);
         txt_nom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -302,15 +302,12 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         });
 
         txt_prenom.setEditable(false);
-        txt_prenom.setBackground(new java.awt.Color(240, 240, 240));
         txt_prenom.setBorder(null);
 
         txt_lit.setEditable(false);
-        txt_lit.setBackground(new java.awt.Color(240, 240, 240));
         txt_lit.setBorder(null);
 
         num_pat.setEditable(false);
-        num_pat.setBackground(new java.awt.Color(240, 240, 240));
         num_pat.setBorder(null);
 
         jLabel5.setText("Numéro du lit :");
@@ -318,7 +315,6 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         jLabel6.setText("Numéro du patient :");
 
         txt_chbr.setEditable(false);
-        txt_chbr.setBackground(new java.awt.Color(240, 240, 240));
         txt_chbr.setBorder(null);
         txt_chbr.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -331,7 +327,6 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         jLabel7.setText("Numéros chambre :");
 
         txt_sur.setEditable(false);
-        txt_sur.setBackground(new java.awt.Color(240, 240, 240));
         txt_sur.setBorder(null);
 
         btn_modif.setBackground(new java.awt.Color(204, 204, 204));
@@ -358,13 +353,11 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         jLabel8.setText("Mutuelle patient :");
 
         txt_mut.setEditable(false);
-        txt_mut.setBackground(new java.awt.Color(240, 240, 240));
         txt_mut.setBorder(null);
 
         jLabel9.setText("Code du service :");
 
         txt_code.setEditable(false);
-        txt_code.setBackground(new java.awt.Color(240, 240, 240));
         txt_code.setBorder(null);
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
@@ -481,6 +474,7 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
 
         radio_chbr.setBackground(new java.awt.Color(204, 204, 204));
         buttonGroup1.add(radio_chbr);
+        radio_chbr.setSelected(true);
         radio_chbr.setText("Chambre");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -495,15 +489,13 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(radio_lit)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radio_chbr)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(radio_nom)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radio_pat)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(51, 51, 51)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -518,17 +510,16 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(radio_lit)
                     .addComponent(radio_nom)
                     .addComponent(radio_chbr)
                     .addComponent(radio_pat)
                     .addComponent(jButton1)
                     .addComponent(Add))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -565,18 +556,14 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_modifActionPerformed
 
     private void btn_supprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_supprActionPerformed
-        /*  try{
+          try{
 
-            String requete2 = "delete from DOCTEUR where numero ='"+gettableresult()+"'";
-            String requete = "delete from EMPLOYE where numero ='"+gettableresult()+"'";
-            System.out.println(test);
+            String requete = "delete from CHAMBRE where no_chambre ='"+gettableresult()+"'";
             if(JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir le supprimer ?",
                 "Supprimer", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
 
         {
             ps = conn.prepareStatement(requete);
-            ps.execute();
-            ps = conn.prepareStatement(requete2);
             ps.execute();
 
             JOptionPane.showMessageDialog(null,"Supprimé avec succès");
@@ -584,7 +571,8 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         }
         }catch(SQLException e){
             System.out.println(e);
-        }*/
+        }
+          Affichage(x);
     }//GEN-LAST:event_btn_supprActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -613,7 +601,6 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
     private javax.swing.JTextField num_pat;
     private javax.swing.JPanel panel;
     private javax.swing.JRadioButton radio_chbr;
-    private javax.swing.JRadioButton radio_lit;
     private javax.swing.JRadioButton radio_nom;
     private javax.swing.JRadioButton radio_pat;
     private javax.swing.JTextField txt_chbr;

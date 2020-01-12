@@ -116,7 +116,7 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
     {
         if(radio_nom.isSelected())
             try{
-                String requete1 = "select numero, prenom, nom from MALADE where nom LIKE ?";
+                String requete1 = "select numero, prenom, nom from MALADE where nom LIKE ? order by nom";
                 ps = conn.prepareStatement(requete1); 
                 ps.setString(1, "%"+txt_search.getText()+"%");
                 rs =ps.executeQuery();
@@ -129,7 +129,7 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
        
       if(radio_num.isSelected())
         try{
-             String requete2 = "select numero, prenom, nom from MALADE where numero LIKE ?";
+             String requete2 = "select numero, prenom, nom from MALADE where numero LIKE ? order by numero";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -143,7 +143,7 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
       
       if(radio_prenom.isSelected())
           try{
-             String requete2 = "select numero, prenom, nom from MALADE where prenom LIKE ?";
+             String requete2 = "select numero, prenom, nom from MALADE where prenom LIKE ? order by prenom";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -157,7 +157,7 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
       
        if(radio_mut.isSelected())
           try{
-             String requete2 = "select numero, prenom, nom, mutuelle from MALADE where mutuelle LIKE ?";
+             String requete2 = "select numero, prenom, nom, mutuelle from MALADE where mutuelle LIKE ? order by mutuelle";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -540,6 +540,7 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
        }catch(SQLException e){
            System.out.println(e);
        }
+        Affichage();
     }//GEN-LAST:event_btn_supprActionPerformed
 
     private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased

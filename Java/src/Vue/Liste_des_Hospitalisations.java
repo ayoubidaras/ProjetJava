@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import net.proteanit.sql.DbUtils;
@@ -107,7 +108,7 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
     {
         if(radio_pat.isSelected())
             try{
-                String requete1 =  "select no_malade, no_chambre, lit from HOSPITALISATION where no_malade LIKE ?";
+                String requete1 =  "select no_malade, no_chambre, lit from HOSPITALISATION where no_malade LIKE ? order by no_malade";
                 ps = conn.prepareStatement(requete1); 
                 ps.setString(1, "%"+txt_search.getText()+"%");
                 rs =ps.executeQuery();
@@ -120,7 +121,7 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
        
       if(radio_lit.isSelected())
         try{
-             String requete2 ="select no_malade, no_chambre, lit from HOSPITALISATION where lit LIKE ?";
+             String requete2 ="select no_malade, no_chambre, lit from HOSPITALISATION where lit LIKE ? order by lit";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -134,7 +135,7 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
       
       if(radio_chbr.isSelected())
           try{
-             String requete2 ="select no_malade, no_chambre, lit from HOSPITALISATION where no_chambre LIKE ?";
+             String requete2 ="select no_malade, no_chambre, lit from HOSPITALISATION where no_chambre LIKE ? order by no_chambre";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -148,7 +149,7 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
       
       if(radio_nom.isSelected())
             try{
-                String requete1 =  "select no_malade, nom, no_chambre, lit from HOSPITALISATION, MALADE where nom LIKE ? and numero = no_malade";
+                String requete1 =  "select no_malade, nom, no_chambre, lit from HOSPITALISATION, MALADE where nom LIKE ? and numero = no_malade order by nom";
                 ps = conn.prepareStatement(requete1); 
                 ps.setString(1, "%"+txt_search.getText()+"%");
                 rs =ps.executeQuery();
@@ -157,6 +158,11 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
        }catch(SQLException e){
            System.out.println(e);
        }
+    }
+           
+                    public String gettableresult()
+    {
+        return test;
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -504,17 +510,14 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_modifActionPerformed
 
     private void btn_supprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_supprActionPerformed
-        /*  try{
+          try{
 
-            String requete2 = "delete from DOCTEUR where numero ='"+gettableresult()+"'";
-            String requete = "delete from EMPLOYE where numero ='"+gettableresult()+"'";
+            String requete2 = "delete from HOSPITALISATION where no_malade ='"+gettableresult()+"'";
             System.out.println(test);
             if(JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir le supprimer ?",
                 "Supprimer", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
 
         {
-            ps = conn.prepareStatement(requete);
-            ps.execute();
             ps = conn.prepareStatement(requete2);
             ps.execute();
 
@@ -523,7 +526,8 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
         }
         }catch(SQLException e){
             System.out.println(e);
-        }*/
+        }
+          Affichage();
     }//GEN-LAST:event_btn_supprActionPerformed
 
     private void Table_hosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_hosMouseClicked

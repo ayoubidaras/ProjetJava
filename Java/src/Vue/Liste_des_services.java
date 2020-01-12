@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import net.proteanit.sql.DbUtils;
@@ -101,7 +102,7 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
     {
         if(radio_code.isSelected())
             try{
-                String requete1 = "select code,E.numero, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and code LIKE ?";
+                String requete1 = "select code,E.numero, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and code LIKE ? order by code";
                 ps = conn.prepareStatement(requete1); 
                 ps.setString(1, "%"+txt_search.getText()+"%");
                 rs =ps.executeQuery();
@@ -114,7 +115,7 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
        
       if(radio_nom.isSelected())
         try{
-             String requete2 = "select code,E.numero, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and S.nom LIKE ?";
+             String requete2 = "select code,E.numero, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and S.nom LIKE ? order by S.nom";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -128,7 +129,7 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
       
       if(radio_bat.isSelected())
           try{
-             String requete2 = "select code,E.numero, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and batiment LIKE ?";
+             String requete2 = "select code,E.numero, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and batiment LIKE ? order by batiment";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -142,7 +143,7 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
       
        if(radio_dir.isSelected())
           try{
-             String requete2 = "select code,E.numero, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and directeur LIKE ?";;
+             String requete2 = "select code,E.numero, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and directeur LIKE ? order by E.numero";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -155,7 +156,7 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
        
        if(radio_nom_dir.isSelected())
           try{
-             String requete2 = "select code,E.numero, E.nom, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and E.nom LIKE ?";;
+             String requete2 = "select code,E.numero, E.nom, S.nom , batiment  from SERVICE S,EMPLOYE E, DOCTEUR D where D.numero = S.directeur and D.numero = E.numero and E.nom LIKE ? order by E.nom";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -177,6 +178,7 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
         ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
         this.setBorder(null);
     }
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -373,6 +375,11 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
         btn_search.setBackground(new java.awt.Color(204, 204, 204));
         btn_search.setText("recherche");
         btn_search.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btn_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_searchActionPerformed(evt);
+            }
+        });
 
         radio_code.setBackground(new java.awt.Color(204, 204, 204));
         buttonGroup1.add(radio_code);
@@ -463,17 +470,14 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btn_modifActionPerformed
 
     private void btn_supprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_supprActionPerformed
-       /* try{
+        try{
 
-            String requete2 = "delete from DOCTEUR where numero ='"+gettableresult()+"'";
-            String requete = "delete from EMPLOYE where numero ='"+gettableresult()+"'";
+            String requete2 = "delete from SERVICE where code ='"+gettableresult()+"'";
             System.out.println(test);
             if(JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir le supprimer ?",
                 "Supprimer", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
 
         {
-            ps = conn.prepareStatement(requete);
-            ps.execute();
             ps = conn.prepareStatement(requete2);
             ps.execute();
 
@@ -482,7 +486,8 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
         }
         }catch(SQLException e){
             System.out.println(e);
-        }*/
+        }
+        Affichage();
     }//GEN-LAST:event_btn_supprActionPerformed
 
     private void Table_serviceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_serviceMouseClicked
@@ -492,6 +497,10 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
     private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
         search();
     }//GEN-LAST:event_txt_searchKeyReleased
+
+    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
+       search();
+    }//GEN-LAST:event_btn_searchActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

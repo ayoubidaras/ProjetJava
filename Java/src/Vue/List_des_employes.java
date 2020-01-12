@@ -28,18 +28,20 @@ public class List_des_employes extends javax.swing.JInternalFrame {
     PreparedStatement ps = null;
     static String test;
     static Boolean admin =null;
+    static Boolean x =null;
     /**
      * Creates new form List_des_employes
-     * @param x
+     * @param nocturne
      * @param connexion
      * @param admini
      */
     
-    public List_des_employes(Boolean x, Connection connexion, Boolean admini) {
+    public List_des_employes(Boolean nocturne, Connection connexion, Boolean admini) {
         List_des_employes.admin =admini;
         List_des_employes.conn = connexion;
         initComponents();
         remove_title_bar();
+        List_des_employes.x = nocturne;
         Affichage(x); 
         
         if(!admin)
@@ -55,7 +57,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
            if(x == false)
                 requete = "select I.numero ,prenom, nom from EMPLOYE E, INFIRMIER I where E.numero = I.numero"; 
            else 
-                requete = "select I.numero ,prenom, nom from EMPLOYE E, INFIRMIER I where E.numero = I.numero and I.rotation ='Nuit'";
+                requete = "select I.numero ,prenom, nom from EMPLOYE E, INFIRMIER I where E.numero = I.numero and I.rotation ='NUIT'";
            
            ps = conn.prepareStatement(requete);
            rs = ps.executeQuery();
@@ -120,7 +122,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         
         if(radio_nom.isSelected())
             try{
-                String requete1 = "select E.numero, E.prenom, E.nom from INFIRMIER I , EMPLOYE E where E.nom LIKE ? and E.numero = I.numero";
+                String requete1 = "select E.numero, E.prenom, E.nom from INFIRMIER I , EMPLOYE E where E.nom LIKE ? and E.numero = I.numero order by E.nom";
                 ps = conn.prepareStatement(requete1); 
                 ps.setString(1, "%"+txt_search.getText()+"%");
                 rs =ps.executeQuery();
@@ -133,7 +135,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
        
       if(radio_num.isSelected())
         try{
-             String requete2 = "select E.numero, E.prenom, E.nom from INFIRMIER I , EMPLOYE E where E.numero LIKE ? and E.numero = I.numero";
+             String requete2 = "select E.numero, E.prenom, E.nom from INFIRMIER I , EMPLOYE E where E.numero LIKE ? and E.numero = I.numero order by E.numero";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs2 = ps.executeQuery();
@@ -147,7 +149,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
       
       if(radio_prenom.isSelected())
           try{
-             String requete2 = "select E.numero, E.prenom, E.nom from INFIRMIER I , EMPLOYE E where E.prenom LIKE ? and E.numero = I.numero";
+             String requete2 = "select E.numero, E.prenom, E.nom from INFIRMIER I , EMPLOYE E where E.prenom LIKE ? and E.numero = I.numero order by E.prenom";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs2 = ps.executeQuery();
@@ -161,7 +163,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
       
        if(radio_sal.isSelected())
           try{
-             String requete2 = "select E.numero, E.prenom, E.nom, salaire from INFIRMIER I , EMPLOYE E where I.salaire LIKE ? and E.numero = I.numero";
+             String requete2 = "select E.numero, E.prenom, E.nom, salaire from INFIRMIER I , EMPLOYE E where I.salaire LIKE ? and E.numero = I.numero order by I.salaire";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1, txt_search.getText()+"%");
              rs2 = ps.executeQuery();
@@ -174,7 +176,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         }
         if(radio_rot.isSelected())
           try{
-             String requete2 = "select E.numero, E.prenom, E.nom, rotation from INFIRMIER I , EMPLOYE E where I.rotation LIKE ? and E.numero = I.numero";
+             String requete2 = "select E.numero, E.prenom, E.nom, rotation from INFIRMIER I , EMPLOYE E where I.rotation LIKE ? and E.numero = I.numero order by I.rotation";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs2 = ps.executeQuery();
@@ -187,7 +189,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         }
          if(radio_ser.isSelected())
           try{
-             String requete2 = "select E.numero, E.prenom, E.nom, code_service from INFIRMIER I , EMPLOYE E where I.code_service LIKE ? and E.numero = I.numero";
+             String requete2 = "select E.numero, E.prenom, E.nom, code_service from INFIRMIER I , EMPLOYE E where I.code_service LIKE ? and E.numero = I.numero order by I.code_service";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs2 = ps.executeQuery();
@@ -568,14 +570,12 @@ public class List_des_employes extends javax.swing.JInternalFrame {
        try{ 
            
             String requete = "delete from EMPLOYE where numero ='"+gettableresult()+"'";
-            String requete2 = "delete from INFIRMIER where numero ='"+gettableresult()+"'";
-            System.out.println(test);
             if(JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir le supprimer ?",
                                         "Supprimer", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
           
         {
-                ps = conn.prepareStatement(requete2);
-                ps.execute();
+               // ps = conn.prepareStatement(requete2);
+                //ps.execute();
                 ps = conn.prepareStatement(requete);
                 ps.execute();
 
@@ -585,6 +585,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
        }catch(SQLException e){
            System.out.println(e);
        }
+       Affichage(x);
     }//GEN-LAST:event_btn_supprActionPerformed
 
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed

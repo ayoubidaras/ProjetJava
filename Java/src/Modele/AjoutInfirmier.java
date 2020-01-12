@@ -211,9 +211,9 @@ public class AjoutInfirmier extends javax.swing.JFrame {
           ps.setString(3,txt_salaire.getText());
           
           if(radio_jour.isSelected())
-            ps.setString(4,"Jour");
+            ps.setString(4,"JOUR");
           else
-            ps.setString(4,"Nuit");  
+            ps.setString(4,"NUIT");  
           
           ps.execute(); 
           
