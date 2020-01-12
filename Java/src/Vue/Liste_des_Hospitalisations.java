@@ -148,7 +148,7 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
       
       if(radio_nom.isSelected())
             try{
-                String requete1 =  "select no_malade, nom, no_chambre, lit from HOSPITALISATION, MALADE where nom LIKE ?";
+                String requete1 =  "select no_malade, nom, no_chambre, lit from HOSPITALISATION, MALADE where nom LIKE ? and numero = no_malade";
                 ps = conn.prepareStatement(requete1); 
                 ps.setString(1, "%"+txt_search.getText()+"%");
                 rs =ps.executeQuery();
@@ -200,7 +200,9 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
         setBackground(new java.awt.Color(204, 204, 204));
         setPreferredSize(new java.awt.Dimension(1248, 492));
 
+        jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setText("rechercher");
+        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -218,6 +220,7 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Prénom patient :");
 
+        txt_nom.setEditable(false);
         txt_nom.setBackground(new java.awt.Color(240, 240, 240));
         txt_nom.setBorder(null);
         txt_nom.addActionListener(new java.awt.event.ActionListener() {
@@ -226,12 +229,15 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
             }
         });
 
+        txt_prenom.setEditable(false);
         txt_prenom.setBackground(new java.awt.Color(240, 240, 240));
         txt_prenom.setBorder(null);
 
+        txt_lit.setEditable(false);
         txt_lit.setBackground(new java.awt.Color(240, 240, 240));
         txt_lit.setBorder(null);
 
+        num_pat.setEditable(false);
         num_pat.setBackground(new java.awt.Color(240, 240, 240));
         num_pat.setBorder(null);
 
@@ -241,6 +247,7 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Nom patient :");
 
+        txt_chbr.setEditable(false);
         txt_chbr.setBackground(new java.awt.Color(240, 240, 240));
         txt_chbr.setBorder(null);
 
@@ -267,11 +274,13 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Mutuelle patient :");
 
+        txt_mut.setEditable(false);
         txt_mut.setBackground(new java.awt.Color(240, 240, 240));
         txt_mut.setBorder(null);
 
         jLabel9.setText("Code du service :");
 
+        txt_code.setEditable(false);
         txt_code.setBackground(new java.awt.Color(240, 240, 240));
         txt_code.setBorder(null);
         txt_code.addActionListener(new java.awt.event.ActionListener() {
@@ -424,7 +433,7 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
 
         radio_nom.setBackground(new java.awt.Color(204, 204, 204));
         buttonGroup1.add(radio_nom);
-        radio_nom.setText("Nom");
+        radio_nom.setText("Nom Patient");
 
         radio_chbr.setBackground(new java.awt.Color(204, 204, 204));
         buttonGroup1.add(radio_chbr);
@@ -442,21 +451,21 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(radio_lit)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(radio_chbr)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radio_pat)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radio_nom)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(radio_pat)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radio_chbr)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(radio_lit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Add, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(251, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

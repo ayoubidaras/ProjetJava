@@ -221,6 +221,8 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Nom :");
 
+        txt_nom.setBackground(new java.awt.Color(240, 240, 240));
+        txt_nom.setBorder(null);
         txt_nom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_nomActionPerformed(evt);
@@ -229,17 +231,45 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Prénom :");
 
+        txt_prenom.setEditable(false);
+        txt_prenom.setBackground(new java.awt.Color(240, 240, 240));
+        txt_prenom.setBorder(null);
+
         jLabel3.setText("Numero :");
+
+        txt_numero.setEditable(false);
+        txt_numero.setBackground(new java.awt.Color(240, 240, 240));
+        txt_numero.setBorder(null);
 
         jLabel4.setText("Numéro de télephone :");
 
+        txt_tel.setEditable(false);
+        txt_tel.setBackground(new java.awt.Color(240, 240, 240));
+        txt_tel.setBorder(null);
+
         jLabel5.setText("Adresse :");
+
+        txt_adresse.setEditable(false);
+        txt_adresse.setBackground(new java.awt.Color(240, 240, 240));
+        txt_adresse.setBorder(null);
 
         jLabel6.setText("Mutuelle :");
 
+        txt_mutuelle.setEditable(false);
+        txt_mutuelle.setBackground(new java.awt.Color(240, 240, 240));
+        txt_mutuelle.setBorder(null);
+
         jLabel7.setText("Docteur attitré :");
 
+        txt_doc.setEditable(false);
+        txt_doc.setBackground(new java.awt.Color(240, 240, 240));
+        txt_doc.setBorder(null);
+
         jLabel8.setText("Chambre n° :");
+
+        txt_chbr.setEditable(false);
+        txt_chbr.setBackground(new java.awt.Color(240, 240, 240));
+        txt_chbr.setBorder(null);
 
         jButton3.setBackground(new java.awt.Color(204, 204, 204));
         jButton3.setText("Modifier");
@@ -336,7 +366,7 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txt_adresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(txt_mutuelle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -384,7 +414,9 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_search.setBackground(new java.awt.Color(204, 204, 204));
         btn_search.setText("recherche");
+        btn_search.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchActionPerformed(evt);
@@ -428,16 +460,16 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_search)
-                        .addGap(27, 27, 27)
+                        .addGap(18, 18, 18)
                         .addComponent(radio_num)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radio_nom)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radio_prenom)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(radio_mut)))
+                        .addComponent(radio_mut)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

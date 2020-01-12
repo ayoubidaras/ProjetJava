@@ -212,6 +212,7 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Prénom :");
 
+        txt_nom.setEditable(false);
         txt_nom.setBackground(new java.awt.Color(240, 240, 240));
         txt_nom.setBorder(null);
         txt_nom.addActionListener(new java.awt.event.ActionListener() {
@@ -220,12 +221,15 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
             }
         });
 
+        txt_prenom.setEditable(false);
         txt_prenom.setBackground(new java.awt.Color(240, 240, 240));
         txt_prenom.setBorder(null);
 
+        txt_tel.setEditable(false);
         txt_tel.setBackground(new java.awt.Color(240, 240, 240));
         txt_tel.setBorder(null);
 
+        txt_specialite.setEditable(false);
         txt_specialite.setBackground(new java.awt.Color(240, 240, 240));
         txt_specialite.setBorder(null);
 
@@ -233,6 +237,7 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Spécialité :");
 
+        txt_numero.setEditable(false);
         txt_numero.setBackground(new java.awt.Color(240, 240, 240));
         txt_numero.setBorder(null);
 
@@ -240,6 +245,7 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
 
         jLabel7.setText("ID :");
 
+        txt_adresse.setEditable(false);
         txt_adresse.setBackground(new java.awt.Color(240, 240, 240));
         txt_adresse.setBorder(null);
 
@@ -405,7 +411,9 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
         buttonGroup1.add(radio_specialite);
         radio_specialite.setText("Specialité");
 
+        jButton1.setBackground(new java.awt.Color(204, 204, 204));
         jButton1.setText("rechercher");
+        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -425,15 +433,15 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
                         .addComponent(radio_num)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(radio_nom)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radio_prenom)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(radio_specialite)))
+                        .addComponent(radio_specialite)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -453,7 +461,7 @@ public class Liste_des_Docteurs extends javax.swing.JInternalFrame {
                     .addComponent(radio_specialite)
                     .addComponent(jButton1)
                     .addComponent(Add))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

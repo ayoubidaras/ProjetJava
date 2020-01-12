@@ -295,36 +295,43 @@ public class List_des_employes extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Numero :");
 
+        txt_numero.setEditable(false);
         txt_numero.setBackground(new java.awt.Color(240, 240, 240));
         txt_numero.setBorder(null);
 
         jLabel2.setText("Nom :");
 
+        txt_nom.setEditable(false);
         txt_nom.setBackground(new java.awt.Color(240, 240, 240));
         txt_nom.setBorder(null);
 
         jLabel3.setText("Prénom :");
 
+        txt_prenom.setEditable(false);
         txt_prenom.setBackground(new java.awt.Color(240, 240, 240));
         txt_prenom.setBorder(null);
 
         jLabel4.setText("Numéros de téléphone :");
 
+        txt_tel.setEditable(false);
         txt_tel.setBackground(new java.awt.Color(240, 240, 240));
         txt_tel.setBorder(null);
 
         jLabel5.setText("Adresse :");
 
+        txt_adresse.setEditable(false);
         txt_adresse.setBackground(new java.awt.Color(240, 240, 240));
         txt_adresse.setBorder(null);
 
         jLabel6.setText("Code de service :");
 
+        txt_service.setEditable(false);
         txt_service.setBackground(new java.awt.Color(240, 240, 240));
         txt_service.setBorder(null);
 
         jLabel7.setText("Rotation :");
 
+        txt_rotation.setEditable(false);
         txt_rotation.setBackground(new java.awt.Color(240, 240, 240));
         txt_rotation.setBorder(null);
 
@@ -404,7 +411,7 @@ public class List_des_employes extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txt_numero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -461,7 +468,9 @@ public class List_des_employes extends javax.swing.JInternalFrame {
             }
         });
 
+        btn_search.setBackground(new java.awt.Color(204, 204, 204));
         btn_search.setText("rechercher");
+        btn_search.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchActionPerformed(evt);
@@ -510,8 +519,6 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_search)
-                        .addGap(26, 26, 26)
                         .addComponent(radio_num)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(radio_nom)
@@ -523,7 +530,9 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                         .addComponent(radio_rot)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radio_sal)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(add, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(363, Short.MAX_VALUE))
         );
@@ -535,13 +544,13 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                     .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btn_search)
                         .addComponent(radio_num)
                         .addComponent(radio_nom)
                         .addComponent(radio_prenom)
                         .addComponent(radio_sal)
                         .addComponent(radio_ser)
-                        .addComponent(radio_rot))
+                        .addComponent(radio_rot)
+                        .addComponent(btn_search))
                     .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

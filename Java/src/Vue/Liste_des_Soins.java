@@ -102,7 +102,7 @@ static Connection conn = null;
     {
         if(radio_pat_nom.isSelected())
             try{
-                String requete1 = "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D where D.numero = no_docteur and M.numero = no_malade and M.nom LIKE ?";
+                String requete1 = "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D, EMPLOYE E where D.numero =E.numero and D.numero = no_docteur and M.numero = no_malade and M.nom LIKE ?";
                 ps = conn.prepareStatement(requete1); 
                 ps.setString(1, "%"+txt_search.getText()+"%");
                 rs =ps.executeQuery();
@@ -143,7 +143,7 @@ static Connection conn = null;
       
        if(radio_doc_nom.isSelected())
           try{
-             String requete2 =  "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and D.nom LIKE ?";
+             String requete2 =  "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and E.nom LIKE ?";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -155,7 +155,7 @@ static Connection conn = null;
         }
          if(radio_spe.isSelected())
           try{
-             String requete2 =  "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D  , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and D.specialite LIKE ?";
+             String requete2 =  "select no_malade, M.nom, no_docteur, E.nom , D.specialite from SOIGNE S, MALADE M, DOCTEUR D  , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and D.specialite LIKE ?";
              ps = conn.prepareStatement(requete2); 
              ps.setString(1,"%"+ txt_search.getText()+"%");
              rs = ps.executeQuery();
@@ -223,7 +223,7 @@ static Connection conn = null;
         radio_doc_nom.setText("Nom Doc");
 
         jButton1.setBackground(new java.awt.Color(255, 153, 51));
-        jButton1.setText("Ajouter un patient");
+        jButton1.setText("Soigner");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -254,6 +254,8 @@ static Connection conn = null;
 
         jLabel1.setText("Nom :");
 
+        txt_nom.setEditable(false);
+        txt_nom.setBorder(null);
         txt_nom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_nomActionPerformed(evt);
@@ -262,11 +264,23 @@ static Connection conn = null;
 
         jLabel2.setText("Prénom :");
 
+        txt_prenom.setEditable(false);
+        txt_prenom.setBorder(null);
+
         jLabel3.setText("Numero :");
+
+        txt_numero.setEditable(false);
+        txt_numero.setBorder(null);
 
         jLabel7.setText("Docteur attitré :");
 
+        txt_doc.setEditable(false);
+        txt_doc.setBorder(null);
+
         jLabel8.setText("Spécialité :");
+
+        txt_spe.setEditable(false);
+        txt_spe.setBorder(null);
 
         btn_suppr.setBackground(new java.awt.Color(255, 153, 153));
         btn_suppr.setText("Suppression");
@@ -337,7 +351,7 @@ static Connection conn = null;
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(txt_spe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
                 .addComponent(btn_suppr)
                 .addContainerGap())
         );
@@ -356,7 +370,9 @@ static Connection conn = null;
             }
         });
 
+        btn_search.setBackground(new java.awt.Color(204, 204, 204));
         btn_search.setText("recherche");
+        btn_search.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_searchActionPerformed(evt);
@@ -389,14 +405,14 @@ static Connection conn = null;
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(radio_spe)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_search)
-                        .addGap(125, 125, 125)
+                        .addComponent(btn_search, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(116, 116, 116)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 599, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 147, Short.MAX_VALUE))
+                .addGap(0, 328, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
