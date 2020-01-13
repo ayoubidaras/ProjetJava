@@ -243,6 +243,9 @@ public class ModifInfirmier extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+     * Attempts data modification
+     */
     private void btn_modifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifActionPerformed
         
             

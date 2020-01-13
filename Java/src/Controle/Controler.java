@@ -9,7 +9,9 @@ public class Controler {
 	
 	//private LoginGUI l_gui = null;
 	
-	
+	/**
+     * Launches the connection frame in order to enable the user to connect to the system
+     */
 	public Controler(String[] args)
 	{
       

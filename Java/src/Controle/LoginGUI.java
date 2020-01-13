@@ -23,6 +23,10 @@ public class LoginGUI extends javax.swing.JFrame {
     PreparedStatement ps = null;
     Boolean admin = false;
     
+	/**
+     * Creates new form LoginGUI
+     * @param connexion
+     */
     public LoginGUI(Connection connexion){
         LoginGUI.conn = connexion;
        initComponents();
@@ -110,6 +114,9 @@ public class LoginGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+     * Attempts connection to the local system through authentication according to the data in the "Login_table" table in the database
+     */
     private void btn_coMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_coMouseClicked
      String requete = "select * from Login_table where login= ? and password = ?";
              try{

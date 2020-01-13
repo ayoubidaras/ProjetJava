@@ -395,6 +395,9 @@ public class HomeGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+     * Shows the nurses' panel
+     */
     private void btn_infActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_infActionPerformed
         Boolean x;
         
@@ -418,6 +421,9 @@ public class HomeGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_toggle_NSCaretPositionChanged
 
+	/**
+     * Shows the doctors' panel
+     */
     private void btn_docActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_docActionPerformed
          Boolean x;
         
@@ -431,6 +437,9 @@ public class HomeGUI extends javax.swing.JFrame {
             l_doc.show();
     }//GEN-LAST:event_btn_docActionPerformed
 
+	/**
+     * Shows the patients' panel
+     */
     private void btn_malActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_malActionPerformed
                 
         
@@ -442,6 +451,9 @@ public class HomeGUI extends javax.swing.JFrame {
         l_mal.show();
     }//GEN-LAST:event_btn_malActionPerformed
 
+	/**
+     * Shows the services' panel
+     */
     private void btn_serActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_serActionPerformed
        this.Desk.removeAll();
         this.Desk.repaint();
@@ -451,6 +463,9 @@ public class HomeGUI extends javax.swing.JFrame {
         l_ser.show();
     }//GEN-LAST:event_btn_serActionPerformed
 
+	/**
+     * Shows the rooms' panel
+     */
     private void btn_chbrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_chbrActionPerformed
         this.Desk.removeAll();
         this.Desk.repaint();
@@ -465,6 +480,9 @@ public class HomeGUI extends javax.swing.JFrame {
         l_chbr.show();
     }//GEN-LAST:event_btn_chbrActionPerformed
 
+	/**
+     * Shows the hospitalizations' panel
+     */
     private void btn_hosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hosActionPerformed
         this.Desk.removeAll();
         this.Desk.repaint();
@@ -474,6 +492,9 @@ public class HomeGUI extends javax.swing.JFrame {
         l_Hos.show();
     }//GEN-LAST:event_btn_hosActionPerformed
 
+	/**
+     * Shows the panel for "Soigne" table
+     */
     private void btn_soinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_soinActionPerformed
         this.Desk.removeAll();
         this.Desk.repaint();
@@ -487,6 +508,9 @@ public class HomeGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_toggle_freeActionPerformed
 
+	/**
+     * Shows a new frame in order to add a new user profile
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         AjoutLogin log = new AjoutLogin(conn);
         log.setVisible(true);

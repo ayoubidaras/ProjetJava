@@ -45,6 +45,9 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
         Affichage();
     }
     
+    /**
+     * Displays rows from SQL query in a table model 
+     */
     private void Affichage(){
        try{
           
@@ -60,13 +63,18 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
        }
     }
     
-      private void remove_title_bar(){
-        putClientProperty("Liste_des_Hospitalisations.isPalette", Boolean.TRUE);
-        getRootPane().setWindowDecorationStyle(JRootPane.NONE);
-        ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
-        this.setBorder(null);
+    /**
+     * Removes the title bar 
+     */
+    private void remove_title_bar(){
+      putClientProperty("Liste_des_Hospitalisations.isPalette", Boolean.TRUE);
+      getRootPane().setWindowDecorationStyle(JRootPane.NONE);
+      ((BasicInternalFrameUI)this.getUI()).setNorthPane(null);
+      this.setBorder(null);
     }
-      
+     /**
+     * Presents on the right side of the panel the values of each column in the database for the selected row on the table in the left side of the panel
+     */
            public void deplacement()
          {
              try{
@@ -108,7 +116,9 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
              }
          }
            
-           
+     /**
+     * Searches for data throughout the database based on one of the given parameters
+     */
            public void search()
     {
         if(radio_pat.isSelected())
@@ -501,20 +511,29 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Executes the search algorithm
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
       search();
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     private void txt_nomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nomActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nomActionPerformed
-
+    
+    /**
+     * Executes the data modification method for the selected row
+     */
     private void btn_modifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifActionPerformed
         ModifHospitalisation hos = new ModifHospitalisation(test,conn);
         hos.setVisible(true);
     }//GEN-LAST:event_btn_modifActionPerformed
 
+    /**
+     * Executes the data deletion method for the selected row
+     */
     private void btn_supprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_supprActionPerformed
         /*  try{
 
@@ -537,11 +556,17 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
             System.out.println(e);
         }*/
     }//GEN-LAST:event_btn_supprActionPerformed
-
+    
+    /**
+     * Executes "deplacement()" method when a row is selected
+     */
     private void Table_hosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_hosMouseClicked
        deplacement();
     }//GEN-LAST:event_Table_hosMouseClicked
-
+    
+    /**
+     * Executes the data insertion method 
+     */
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         AjoutHospitalisation hos = new AjoutHospitalisation(conn);
         hos.setVisible(true);
@@ -558,7 +583,10 @@ public class Liste_des_Hospitalisations extends javax.swing.JInternalFrame {
     private void txt_codeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_codeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_codeActionPerformed
-
+    
+    /**
+     * Shows statistics on how many rooms are available for each medical unit if this medical unit has any
+     */
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         String[] codeService = null;
         int[] nombreChambre = null;

@@ -28,6 +28,10 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
     static String test;
     
    
+    /**
+     * Creates new form Liste_des_malades
+     * @param connexion
+     */
      public Liste_des_malades(Connection connexion) {
          Liste_des_malades.conn = connexion;
         initComponents();
@@ -36,7 +40,10 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
         Affichage();
             
         }
-     
+    
+	/**
+     * Displays rows from SQL query in a table model 
+     */
          private void Affichage(){
        try{
            String requete;
@@ -52,7 +59,10 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
            System.out.println("Exeption" + e);
        }
     }
-     
+    
+	/**
+     * Removes the title bar 
+     */
     private void remove_title_bar(){
         putClientProperty("Liste_des_malades.isPalette", Boolean.TRUE);
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
@@ -65,6 +75,9 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
         return test;
     }
     
+	/**
+     * Presents on the right side of the panel the values of each column in the database for the selected row on the table in the left side of the panel
+     */
      public void deplacement()
          {
              try{
@@ -111,7 +124,10 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
                  System.out.println(e);
              }
          }
-     
+    
+	/**
+     * Searches for data throughout the database based on one of the given parameters
+     */
      public void search()
     {
         if(radio_nom.isSelected())
@@ -508,20 +524,32 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nomActionPerformed
 
+	/**
+     * Executes "deplacement()" method when a row is selected
+     */
     private void Table_malMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_malMouseClicked
         deplacement();
     }//GEN-LAST:event_Table_malMouseClicked
 
+	/**
+     * Executes the data insertion method 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
          AjoutMalade mal = new AjoutMalade(conn);
         mal.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+	/**
+     * Executes the data modification method for the selected row
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         ModifMalade mal = new ModifMalade(test,conn);
         mal.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+	/**
+     * Executes the data deletion method for the selected row
+     */
     private void btn_supprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_supprActionPerformed
         try{ 
            
@@ -546,6 +574,9 @@ public class Liste_des_malades extends javax.swing.JInternalFrame {
         search();
     }//GEN-LAST:event_txt_searchKeyReleased
 
+	/**
+     * Executes the search algorithm
+     */
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
        search();
     }//GEN-LAST:event_btn_searchActionPerformed

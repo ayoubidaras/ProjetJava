@@ -53,7 +53,9 @@ public class List_des_employes extends javax.swing.JInternalFrame {
     }
     
    
-    //display table
+    /**
+     * Displays rows from SQL query in a table model 
+     */
     private void Affichage(Boolean x){
        try{
            String requete;
@@ -71,7 +73,9 @@ public class List_des_employes extends javax.swing.JInternalFrame {
        }
     }
     
-    
+    /**
+     * Removes the title bar 
+     */
     private void remove_title_bar(){
         putClientProperty("List_des_employes.isPalette", Boolean.TRUE);
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
@@ -84,7 +88,9 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         return test;
     }
     
-    
+    /**
+     * Presents on the right side of the panel the values of each column in the database for the selected row on the table in the left side of the panel
+     */
     public void deplacement()
          {
               
@@ -117,7 +123,10 @@ public class List_des_employes extends javax.swing.JInternalFrame {
                  System.out.println(e);
              }
          }
-    
+		
+	/**
+     * Searches for data throughout the database based on one of the given parameters
+     */
     public void search()
     {
         
@@ -580,20 +589,32 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+     * Executes "deplacement()" method when a row is selected
+     */
     private void Table_EmpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_EmpMouseClicked
         deplacement();
     }//GEN-LAST:event_Table_EmpMouseClicked
 
+	/**
+     * Executes the data insertion method 
+     */
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
         AjoutInfirmier inf = new AjoutInfirmier(conn);
         inf.setVisible(true);
     }//GEN-LAST:event_addActionPerformed
 
+	/**
+     * Executes the data modification method for the selected row
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ModifInfirmier inf = new ModifInfirmier(test, conn);
         inf.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+	/**
+     * Executes the data deletion method for the selected row
+     */
     private void btn_supprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_supprActionPerformed
        try{ 
            
@@ -617,6 +638,9 @@ public class List_des_employes extends javax.swing.JInternalFrame {
        }
     }//GEN-LAST:event_btn_supprActionPerformed
 
+	/**
+     * Executes the search algorithm
+     */
     private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
       search(); 
        
@@ -634,6 +658,9 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
+	/**
+     * Shows statistics on how many nurses work at day-time or night-time
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int jour = 0;
         int nuit = 0;
@@ -669,7 +696,10 @@ public class List_des_employes extends javax.swing.JInternalFrame {
         frame.setVisible(true);
         frame.setSize(450,500);
     }//GEN-LAST:event_jButton3ActionPerformed
-
+	
+	/**
+     * Shows statistics on how much nurses earn on average based on their working shift (day-time or night-time)
+     */
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int salaireMoyenJour = 0;
         int salaireMoyenNuit = 0;

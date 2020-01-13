@@ -169,6 +169,9 @@ public class ModifChambre extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+     * Attempts data modification
+     */
     private void ModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ModifActionPerformed
         String t1 = txt_num.getText();
         String t2 = txt_code.getText();

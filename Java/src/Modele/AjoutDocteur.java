@@ -157,6 +157,9 @@ public class AjoutDocteur extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+     * Attempts data insertion 
+     */
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         try{
             String requete = "insert into EMPLOYE (numero, nom,prenom, tel, adresse) values (?, ?, ?,?,?)";

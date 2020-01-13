@@ -38,6 +38,9 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         Affichage(x);
     }
 
+	/**
+     * Displays rows from SQL query in a table model 
+     */
     private void Affichage(Boolean x){
        try{
           
@@ -56,6 +59,9 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
        }
     }
     
+	/**
+     * Removes the title bar 
+     */
      private void remove_title_bar(){
         putClientProperty("Liste_de_chambres.isPalette", Boolean.TRUE);
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
@@ -63,6 +69,9 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         this.setBorder(null);
     }
      
+	/**
+     * Presents on the right side of the panel the values of each column in the database for the selected row on the table in the left side of the panel
+     */
      public void deplacement()
          {
              try{
@@ -139,7 +148,9 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
              }
          }
      
-     
+    /**
+     * Searches for data throughout the database based on one of the given parameters
+     */
       public void search()
     {
         if(radio_nom.isSelected())
@@ -534,15 +545,22 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+     * Executes "deplacement()" method when a row is selected
+     */
     private void Table_chbrMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_chbrMouseClicked
         deplacement();
     }//GEN-LAST:event_Table_chbrMouseClicked
 
+	/**
+     * Executes the data insertion method 
+     */
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         AjoutChambre chbr = new AjoutChambre(conn);
         chbr.setVisible(true);
     }//GEN-LAST:event_AddActionPerformed
 
+	
     private void txt_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_searchActionPerformed
         search();
     }//GEN-LAST:event_txt_searchActionPerformed
@@ -559,11 +577,17 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_chbrActionPerformed
 
+	/**
+     * Executes the data modification method for the selected row
+     */
     private void btn_modifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifActionPerformed
         ModifChambre chbr = new ModifChambre(test,conn);
         chbr.setVisible(true);
     }//GEN-LAST:event_btn_modifActionPerformed
 
+	/**
+     * Executes the data deletion method for the selected row
+     */
     private void btn_supprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_supprActionPerformed
         /*  try{
 
@@ -587,6 +611,9 @@ public class Liste_de_chambres extends javax.swing.JInternalFrame {
         }*/
     }//GEN-LAST:event_btn_supprActionPerformed
 
+	/**
+     * Executes the search algorithm
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         search();
     }//GEN-LAST:event_jButton1ActionPerformed

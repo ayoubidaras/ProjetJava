@@ -104,6 +104,9 @@ public class AjoutSoin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+     * Attempts data insertion 
+     */
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         try{
             String requete = "insert into SOIGNE (no_malade, no_docteur) values (?, ?)";

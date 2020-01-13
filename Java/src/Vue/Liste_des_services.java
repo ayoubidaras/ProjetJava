@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.JRootPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import net.proteanit.sql.DbUtils;
@@ -29,7 +30,10 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
     PreparedStatement ps = null;
     static String test;
     
-   
+    /**
+     * Creates new form Liste_des_services
+     * @param connexion
+     */
      public Liste_des_services(Connection connexion) {
         Liste_des_services.conn = connexion;
         initComponents();
@@ -38,7 +42,9 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
         Affichage();
             
         }
-     
+    /**
+     * Displays rows from SQL query in a table model 
+     */
          private void Affichage(){
        try{
            String requete;
@@ -60,7 +66,10 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
     {
         return test;
     }
-         
+    
+	/**
+     * Presents on the right side of the panel the values of each column in the database for the selected row on the table in the left side of the panel
+     */
           public void deplacement()
          {
              try{
@@ -96,7 +105,10 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
              }
              }
          }
-          
+    
+	/**
+     * Searches for data throughout the database based on one of the given parameters
+     */
           public void search()
     {
         if(radio_code.isSelected())
@@ -170,7 +182,9 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
       
          
      
-     
+    /**
+     * Removes the title bar 
+     */
     private void remove_title_bar(){
         putClientProperty("Liste_des_services.isPalette", Boolean.TRUE);
         getRootPane().setWindowDecorationStyle(JRootPane.NONE);
@@ -448,6 +462,9 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	/**
+     * Executes the data insertion method 
+     */
     private void AddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddActionPerformed
         AjoutService ser = new AjoutService(conn);
         ser.setVisible(true);
@@ -457,16 +474,21 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nomActionPerformed
 
+	/**
+     * Executes the data modification method for the selected row
+     */
     private void btn_modifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifActionPerformed
         ModifService ser = new ModifService(test, conn);
         ser.setVisible(true);
     }//GEN-LAST:event_btn_modifActionPerformed
 
+	/**
+     * Executes the data deletion method for the selected row
+     */
     private void btn_supprActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_supprActionPerformed
-       /* try{
+		try{
 
-            String requete2 = "delete from DOCTEUR where numero ='"+gettableresult()+"'";
-            String requete = "delete from EMPLOYE where numero ='"+gettableresult()+"'";
+            String requete = "delete from DOCTEUR where numero ='"+gettableresult()+"'";
             System.out.println(test);
             if(JOptionPane.showConfirmDialog(null, "Etes-vous sûr de vouloir le supprimer ?",
                 "Supprimer", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION)
@@ -474,21 +496,25 @@ public class Liste_des_services extends javax.swing.JInternalFrame {
         {
             ps = conn.prepareStatement(requete);
             ps.execute();
-            ps = conn.prepareStatement(requete2);
-            ps.execute();
-
+            
             JOptionPane.showMessageDialog(null,"Supprimé avec succès");
             dispose();
         }
         }catch(SQLException e){
             System.out.println(e);
-        }*/
+        }
     }//GEN-LAST:event_btn_supprActionPerformed
 
+	/**
+     * Executes "deplacement()" method when a row is selected
+     */
     private void Table_serviceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Table_serviceMouseClicked
         deplacement();
     }//GEN-LAST:event_Table_serviceMouseClicked
 
+	/**
+     * Executes the search algorithm
+     */
     private void txt_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchKeyReleased
         search();
     }//GEN-LAST:event_txt_searchKeyReleased
