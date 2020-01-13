@@ -110,7 +110,7 @@ static Connection conn = null;
             try{
                 String requete1 = "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D, EMPLOYE E where D.numero =E.numero and D.numero = no_docteur and M.numero = no_malade and M.nom LIKE ? order by M.nom";
                 ps = conn.prepareStatement(requete1); 
-                ps.setString(1, "%"+txt_search.getText()+"%");
+                ps.setString(1, txt_search.getText()+"%");
                 rs =ps.executeQuery();
                 Table_soin.setModel(DbUtils.resultSetToTableModel(rs));
             
@@ -151,7 +151,7 @@ static Connection conn = null;
           try{
              String requete2 =  "select no_malade, M.nom, no_docteur, E.nom from SOIGNE S, MALADE M, DOCTEUR D , EMPLOYE E where E.numero = D.numero and D.numero = no_docteur and M.numero = no_malade and E.nom LIKE ? order by E.nom";
              ps = conn.prepareStatement(requete2); 
-             ps.setString(1,"%"+ txt_search.getText()+"%");
+             ps.setString(1, txt_search.getText()+"%");
              rs = ps.executeQuery();
 
              Table_soin.setModel(DbUtils.resultSetToTableModel(rs));
@@ -212,6 +212,10 @@ static Connection conn = null;
         txt_search = new javax.swing.JTextField();
         btn_search = new javax.swing.JButton();
         radio_spe = new javax.swing.JRadioButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        txt_count = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(204, 204, 204));
@@ -383,7 +387,7 @@ static Connection conn = null;
         });
 
         btn_search.setBackground(new java.awt.Color(204, 204, 204));
-        btn_search.setText("recherche");
+        btn_search.setText("Trier");
         btn_search.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btn_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -395,6 +399,26 @@ static Connection conn = null;
         buttonGroup1.add(radio_spe);
         radio_spe.setText("Spécialité");
 
+        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel11.setText("Reporting :");
+
+        jButton5.setBackground(new java.awt.Color(255, 102, 153));
+        jButton5.setText("Compter");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        txt_count.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_countActionPerformed(evt);
+            }
+        });
+
         jButton2.setBackground(new java.awt.Color(255, 102, 153));
         jButton2.setText("Patients / Doc");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -402,6 +426,39 @@ static Connection conn = null;
                 jButton2ActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel11))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(txt_count, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(47, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(74, 74, 74)
+                .addComponent(jButton5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_count, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -434,8 +491,8 @@ static Connection conn = null;
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(112, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -455,11 +512,10 @@ static Connection conn = null;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
 
         pack();
@@ -556,6 +612,17 @@ static Connection conn = null;
         frame1.setSize(1200,700);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        int row;
+        row = Table_soin.getRowCount();
+        String rowString = Integer.toString(row);
+        txt_count.setText(rowString);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void txt_countActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_countActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_countActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Table_soin;
@@ -564,20 +631,24 @@ static Connection conn = null;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton radio_doc;
     private javax.swing.JRadioButton radio_doc_nom;
     private javax.swing.JRadioButton radio_pat;
     private javax.swing.JRadioButton radio_pat_nom;
     private javax.swing.JRadioButton radio_spe;
+    private javax.swing.JTextField txt_count;
     private javax.swing.JTextField txt_doc;
     private javax.swing.JTextField txt_nom;
     private javax.swing.JTextField txt_numero;
